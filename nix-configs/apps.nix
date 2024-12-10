@@ -9,7 +9,8 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-	environment.systemPackages = with pkgs; [
+environment.systemPackages = with pkgs; [
+    audacity
     auto-cpufreq
     blueman
     brave
@@ -17,7 +18,7 @@
     btop
     cargo
     ciscoPacketTracer8
-    cmake
+    dfu-programmer
     discord
     distrobox
     docker
@@ -31,7 +32,6 @@
     fwupd
     fzf
     gcc
-    geekbench
     gh
     gimp
     git
@@ -41,6 +41,7 @@
     gnome-network-displays
     gnumake
     gparted
+    gpg-tui
     grim
     gtk3
     home-manager
@@ -57,28 +58,38 @@
     libvirt
     lsd
     lutris
+    lunar-client #minecraft
     lxappearance
     lxqt.lxqt-policykit
     mariadb
     meson
-    netcat
     # miraclecast
     moonlight-qt
     ninja
+    netcat
     networkmanagerapplet
     neovim
+    nfs-utils
+    nitrogen
     nodejs_20
     npins
     oh-my-zsh
     openvpn
+    orca-slicer
+    pamixer
     parsec-bin
     pavucontrol
     pcsx2
+    picom
     pipewire
-    prismlauncher # minecraft launcher
+    polybar
+    prismlauncher
+    pulseaudio
     python3
     python312Packages.pip
+    python312Packages.west
     qemu_kvm
+    qmk
     rofi
     rustup
     sddm

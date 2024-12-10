@@ -67,4 +67,7 @@
   # Wireshark
   programs.wireshark.enable = true;
   users.groups.wireshark = {};
+
+  # QMK
+  hardware.keyboard.qmk.enable = true;
 }
