@@ -14,6 +14,7 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      #./affinity.nix
       ./apps.nix
       ./docker.nix
       ./dwm.nix

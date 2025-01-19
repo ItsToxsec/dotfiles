@@ -17,7 +17,7 @@ environment.systemPackages = with pkgs; [
     brightnessctl
     btop
     cargo
-    ciscoPacketTracer8
+    #ciscoPacketTracer8
     dfu-programmer
     discord
     distrobox
@@ -61,6 +61,7 @@ environment.systemPackages = with pkgs; [
     lunar-client #minecraft
     lxappearance
     lxqt.lxqt-policykit
+    macchanger
     mariadb
     meson
     # miraclecast
@@ -75,7 +76,7 @@ environment.systemPackages = with pkgs; [
     npins
     oh-my-zsh
     openvpn
-    orca-slicer
+    # orca-slicer
     pamixer
     parsec-bin
     pavucontrol

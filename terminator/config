@@ -3,6 +3,7 @@
   tab_position = hidden
   scroll_tabbar = True
   homogeneous_tabbar = False
+  ask_before_closing = never
 [keybindings]
   new_tab = <Primary>t
   close_term = <Primary>w
