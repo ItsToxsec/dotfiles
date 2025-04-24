@@ -19,6 +19,7 @@ environment.systemPackages = with pkgs; [
     cargo
     #ciscoPacketTracer8
     dfu-programmer
+    dfu-util
     discord
     distrobox
     docker
