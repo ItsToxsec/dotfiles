@@ -44,13 +44,15 @@ environment.systemPackages = with pkgs; [
     gpg-tui
     grim
     gtk3
+    gvfs
     home-manager
     htop
     hypridle
     hyprlock
     hyprland
     hyprshade
-    kicad
+    kdePackages.sddm 
+    #kicad
     krita
     libreoffice-fresh
     libsecret
@@ -93,7 +95,6 @@ environment.systemPackages = with pkgs; [
     qmk
     rofi
     rustup
-    sddm
     slurp
     spotify
     sqlite
@@ -107,9 +108,10 @@ environment.systemPackages = with pkgs; [
     tmux
     tor
     unzip
+    usbutils
     virt-manager
     virtiofsd
-    vmware-workstation
+    # vmware-workstation
     vscode
     waybar
     wget
