@@ -20,7 +20,8 @@ in
       ./dwm.nix
       ./hyprland.nix
       ./i3wm.nix
-      ./laptop.nix
+      #./laptop.nix
+      ./nvidia.nix 
       ./setup.nix
     ];
 
@@ -28,7 +29,7 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixosPC"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -76,7 +77,7 @@ in
 
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.edipratech = {
+  users.users.itstoxsec = {
     isNormalUser = true;
     description = "Daniel Arpide";
     extraGroups = [ "networkmanager" "wheel" "video" "kvm" "libvirtd" "docker" "wireshark" ]; # Enable ‘sudo’ for the user.
@@ -117,6 +118,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 
 }

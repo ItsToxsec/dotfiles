@@ -80,6 +80,7 @@ environment.systemPackages = with pkgs; [
     oh-my-zsh
     openvpn
     # orca-slicer
+    OVMFFull
     pamixer
     parsec-bin
     pavucontrol
@@ -103,6 +104,7 @@ environment.systemPackages = with pkgs; [
     swaybg
     swayidle
     swaylock-effects
+    swtpm
     terminator
     thunderbird
     tldr
