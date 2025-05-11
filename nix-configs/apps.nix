@@ -79,7 +79,7 @@ environment.systemPackages = with pkgs; [
     npins
     oh-my-zsh
     openvpn
-    # orca-slicer
+    orca-slicer
     OVMFFull
     pamixer
     parsec-bin
@@ -101,6 +101,7 @@ environment.systemPackages = with pkgs; [
     spotify
     sqlite
     steam
+    sunshine
     swaybg
     swayidle
     swaylock-effects
