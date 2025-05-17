@@ -17,7 +17,7 @@ environment.systemPackages = with pkgs; [
     brightnessctl
     btop
     cargo
-    #ciscoPacketTracer8
+    ciscoPacketTracer8
     dfu-programmer
     dfu-util
     discord
@@ -80,6 +80,7 @@ environment.systemPackages = with pkgs; [
     oh-my-zsh
     openvpn
     # orca-slicer
+    pam_u2f
     pamixer
     parsec-bin
     pavucontrol
@@ -90,7 +91,9 @@ environment.systemPackages = with pkgs; [
     prismlauncher
     pulseaudio
     python3
+    python312Packages.django
     python312Packages.pip
+    python312Packages.venvShellHook
     python312Packages.west
     qemu_kvm
     qmk
@@ -112,7 +115,8 @@ environment.systemPackages = with pkgs; [
     usbutils
     virt-manager
     virtiofsd
-    # vmware-workstation
+    virtualenv
+    vmware-workstation
     vscode
     waybar
     wget
