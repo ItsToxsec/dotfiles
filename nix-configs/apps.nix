@@ -18,6 +18,8 @@ environment.systemPackages = with pkgs; [
     btop
     cargo
     #ciscoPacketTracer8
+    coolercontrol.coolercontrol-gui
+    coolercontrol.coolercontrold
     dfu-programmer
     dfu-util
     discord

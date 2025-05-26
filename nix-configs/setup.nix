@@ -1,4 +1,8 @@
-{ inputs, config, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
+  
+  let
+  cfg = config.programs.sunshine;
+  in
 
 {
   boot.supportedFilesystems = [ "ntfs" ];
@@ -49,6 +53,7 @@
         ];
       };
     };
+   programs.zsh.shellInit = "~/dotfiles/.zshrc";
 
   programs.steam.enable = true;
   # virtualisation.vmware.host.enable = true;

@@ -81,8 +81,11 @@ in
     isNormalUser = true;
     description = "Daniel Arpide";
     extraGroups = [ "networkmanager" "wheel" "video" "kvm" "libvirtd" "docker" "wireshark" ]; # Enable ‘sudo’ for the user.
-	  shell = pkgs.zsh;
+    shell = pkgs.zsh;
   };
+
+  # AutoLogin
+  services.getty.autologinUser = "itstoxsec";
 
   # Suspend
   # boot.kernelParams = [ "mem_sleep_default=deep" ];
