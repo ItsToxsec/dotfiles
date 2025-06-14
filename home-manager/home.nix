@@ -1,8 +1,8 @@
 { config, pkgs, ... }: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "edipratech";
-  home.homeDirectory = "/home/edipratech";
+  home.username = "itstoxsec";
+  home.homeDirectory = "/home/itstoxsec";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
