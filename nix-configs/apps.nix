@@ -79,7 +79,7 @@ environment.systemPackages = with pkgs; [
     npins
     oh-my-zsh
     openvpn
-    # orca-slicer
+    orca-slicer
     pam_u2f
     pamixer
     parsec-bin
@@ -116,7 +116,7 @@ environment.systemPackages = with pkgs; [
     virt-manager
     virtiofsd
     virtualenv
-    vmware-workstation
+    #vmware-workstation
     vscode
     waybar
     wget

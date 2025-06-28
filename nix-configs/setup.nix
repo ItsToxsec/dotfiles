@@ -43,6 +43,7 @@
         ];
       };
     };
+  programs.zsh.shellInit = "~/dotfiles/.zshrc";
 
   programs.steam.enable = true;
   # virtualisation.vmware.host.enable = true;
@@ -70,4 +71,7 @@
 
   # QMK
   hardware.keyboard.qmk.enable = true;
+
+  # Auto-CPUfreq
+  services.auto-cpufreq.enable = true;
 }

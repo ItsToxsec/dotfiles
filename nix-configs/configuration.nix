@@ -80,7 +80,7 @@ in
     isNormalUser = true;
     description = "Daniel Arpide";
     extraGroups = [ "networkmanager" "wheel" "video" "kvm" "libvirtd" "docker" "wireshark" ]; # Enable ‘sudo’ for the user.
-	  shell = pkgs.zsh;
+    shell = pkgs.zsh;
   };
 
   # Suspend
