@@ -16,13 +16,10 @@ environment.systemPackages = with pkgs; [
     brave
     brightnessctl
     btop
-    cargo
     ciscoPacketTracer8
     dfu-programmer
     dfu-util
     discord
-    distrobox
-    docker
     fastfetch 
     feh
     filezilla
@@ -32,12 +29,7 @@ environment.systemPackages = with pkgs; [
     freetube
     fwupd
     fzf
-    gcc
-    gh
     gimp
-    git
-    glibc
-    go
     gnome-font-viewer
     gnome-network-displays
     gnumake
@@ -52,6 +44,7 @@ environment.systemPackages = with pkgs; [
     hyprlock
     hyprland
     hyprshade
+    kdePackages.kcolorchooser
     kdePackages.sddm 
     #kicad
     krita
@@ -65,7 +58,6 @@ environment.systemPackages = with pkgs; [
     lxappearance
     lxqt.lxqt-policykit
     macchanger
-    mariadb
     meson
     # miraclecast
     moonlight-qt
@@ -75,7 +67,6 @@ environment.systemPackages = with pkgs; [
     neovim
     nfs-utils
     nitrogen
-    nodejs_20
     npins
     oh-my-zsh
     openvpn
@@ -90,18 +81,11 @@ environment.systemPackages = with pkgs; [
     polybar
     prismlauncher
     pulseaudio
-    python3
-    python312Packages.django
-    python312Packages.pip
-    python312Packages.venvShellHook
-    python312Packages.west
     qemu_kvm
     qmk
     rofi
-    rustup
     slurp
     spotify
-    sqlite
     steam
     swaybg
     swayidle
@@ -119,7 +103,6 @@ environment.systemPackages = with pkgs; [
     #vmware-workstation
     vscode
     waybar
-    wget
     wireplumber
     wireshark
     wlsunset
@@ -127,7 +110,6 @@ environment.systemPackages = with pkgs; [
     xfce.thunar
     xfce.xfwm4
     xwayland
-    zoom-us
     zsh
   ];
 }

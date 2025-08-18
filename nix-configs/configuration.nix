@@ -16,12 +16,17 @@ in
       ./hardware-configuration.nix
       #./affinity.nix
       ./apps.nix
-      ./docker.nix
       ./dwm.nix
       ./hyprland.nix
       ./i3wm.nix
       ./laptop.nix
       ./setup.nix
+      ./IT/c.nix
+      ./IT/go.nix
+      ./IT/python.nix
+      ./IT/ruby.nix
+      ./IT/rust.nix
+      ./IT/utils.nix
     ];
 
   # Bootloader.
