@@ -7,5 +7,6 @@
       xwayland = {
           enable = true;
       };
+        #systemd.enable = false;
   };
 }

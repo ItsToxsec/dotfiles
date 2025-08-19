@@ -38,6 +38,7 @@
             "mute": "",
             "default": [""],
         },
+        "on-click-right": "pavucontrol",
         "exec": "pw-volume status"
     },
     "keyboard-state": {
@@ -170,7 +171,8 @@
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pavucontrol",
+        "on-click-right": "pavucontrol"
     },
     "custom/media": {
         "format": "{icon} {}",

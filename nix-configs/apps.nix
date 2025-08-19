@@ -17,7 +17,7 @@ environment.systemPackages = with pkgs; [
     brightnessctl
     btop
     cargo
-    #ciscoPacketTracer8
+    ciscoPacketTracer8
     coolercontrol.coolercontrol-gui
     coolercontrol.coolercontrold
     dfu-programmer
@@ -55,7 +55,7 @@ environment.systemPackages = with pkgs; [
     hyprland
     hyprshade
     kdePackages.sddm 
-    #kicad
+    kicad
     krita
     libreoffice-fresh
     libsecret
@@ -113,11 +113,12 @@ environment.systemPackages = with pkgs; [
     tldr
     tmux
     tor
+    udisks
     unzip
     usbutils
     virt-manager
     virtiofsd
-    # vmware-workstation
+    #vmware-workstation
     vscode
     waybar
     wget
@@ -130,5 +131,7 @@ environment.systemPackages = with pkgs; [
     xwayland
     zoom-us
     zsh
+
+    pkgs.xfce.thunar-volman
   ];
 }

@@ -16,10 +16,11 @@ in
       ./hardware-configuration.nix
       #./affinity.nix
       ./apps.nix
+      ./autologin.nix
       ./docker.nix
-      ./dwm.nix
+      #./dwm.nix
       ./hyprland.nix
-      ./i3wm.nix
+      #./i3wm.nix
       #./laptop.nix
       ./nvidia.nix 
       ./setup.nix
@@ -64,8 +65,11 @@ in
         enable = true;
     }; 
     services.displayManager.sddm = {
-	enable = true;
+      enable = true;
     };
+    services.displayManager.autoLogin.enable = true;
+    services.displayManager.autoLogin.user = "itstoxsec";
+    services.displayManager.defaultSession = "hyprland";
     
     
 
