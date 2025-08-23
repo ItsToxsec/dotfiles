@@ -15,6 +15,7 @@ fwupd
 fzf
 gcc
 gimp
+github-cli
 glibc
 gnome-font-viewer
 gparted
