@@ -6,6 +6,7 @@ colord-kde
 dfu-programmer
 dfu-util
 discord
+dnsmasq
 fastfetch
 feh
 filezilla

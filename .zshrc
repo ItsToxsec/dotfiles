@@ -202,3 +202,4 @@ fi
 alias vim=nvim
 alias python=python3
 alias ll= "la -la"
+alias update = "sudo pacman -Syu && sudo yay -Syu"
