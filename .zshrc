@@ -201,5 +201,3 @@ if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
 fi
 alias vim=nvim
 alias python=python3
-alias ll= "la -la"
-alias update = "sudo pacman -Syu && sudo yay -Syu"

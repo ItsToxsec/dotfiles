@@ -23,7 +23,10 @@ yay -S \
     brave-bin \
     hyprshade \
     lunar-client \
+    parsec-bin \
     spotify \
+    tlpui \
+    vial-appimage \
     vmware-keymaps \
     vmware-host-module-dkms-git \
     vmware-host-modules-dkms-fix-git \
