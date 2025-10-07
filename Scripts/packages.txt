@@ -73,7 +73,6 @@ unzip
 usbutils
 virt-manager
 virtiofsd
-vscode
 waybar
 wireplumber
 wlsunset

@@ -27,6 +27,7 @@ yay -S \
     spotify \
     tlpui \
     vial-appimage \
+    visual-studio-code-bin \
     vmware-keymaps \
     vmware-host-module-dkms-git \
     vmware-host-modules-dkms-fix-git \
