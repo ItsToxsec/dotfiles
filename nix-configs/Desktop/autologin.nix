@@ -11,4 +11,7 @@
       default_session = initial_session;
     };
   };
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "itstoxsec";
+  services.displayManager.defaultSession = "hyprland";
 }

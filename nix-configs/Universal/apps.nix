@@ -17,9 +17,7 @@ environment.systemPackages = with pkgs; [
     brightnessctl
     btop
     cargo
-    ciscoPacketTracer8
-    coolercontrol.coolercontrol-gui
-    coolercontrol.coolercontrold
+    #ciscoPacketTracer8
     dfu-programmer
     dfu-util
     discord
@@ -30,7 +28,7 @@ environment.systemPackages = with pkgs; [
     filezilla
     firefox
     fprintd
-    freerdp3
+    freerdp
     freetube
     fwupd
     fzf
@@ -55,7 +53,7 @@ environment.systemPackages = with pkgs; [
     hyprland
     hyprshade
     kdePackages.sddm 
-    kicad
+    #kicad
     krita
     libreoffice-fresh
     libsecret
@@ -103,7 +101,6 @@ environment.systemPackages = with pkgs; [
     spotify
     sqlite
     steam
-    sunshine
     swaybg
     swayidle
     swaylock-effects
@@ -116,12 +113,14 @@ environment.systemPackages = with pkgs; [
     udisks
     unzip
     usbutils
+    vial
     virt-manager
     virtiofsd
     #vmware-workstation
     vscode
     waybar
     wget
+    winetricks
     wireplumber
     wireshark
     wlsunset

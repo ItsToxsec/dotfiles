@@ -14,16 +14,19 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      #./affinity.nix
-      ./apps.nix
-      ./autologin.nix
-      ./docker.nix
-      #./dwm.nix
-      ./hyprland.nix
-      #./i3wm.nix
-      #./laptop.nix
-      ./nvidia.nix 
-      ./setup.nix
+      ./Universal/apps.nix
+      ./Universal/docker.nix
+      ./Universal/hyprland.nix
+      ./Universal/setup.nix
+      #./Universal/affinity.nix
+      #./Universal/dwm.nix
+      #./Universal/i3wm.nix
+      ./Desktop/apps.nix
+      ./Desktop/autologin.nix
+      ./Desktop/nvidia.nix 
+      ./Desktop/sunshine.nix
+      #./Laptop/apps.nix
+      #./Laptop/laptop.nix
     ];
 
   # Bootloader.
@@ -67,9 +70,6 @@ in
     services.displayManager.sddm = {
       enable = true;
     };
-    services.displayManager.autoLogin.enable = true;
-    services.displayManager.autoLogin.user = "itstoxsec";
-    services.displayManager.defaultSession = "hyprland";
     
     
 
