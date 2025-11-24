@@ -32,6 +32,7 @@ environment.systemPackages = with pkgs; [
     tor
     unzip
     usbutils
+    vial
     virt-manager
     virtiofsd
     virtualenv
