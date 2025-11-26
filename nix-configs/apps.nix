@@ -62,6 +62,7 @@ environment.systemPackages = with pkgs; [
     # miraclecast
     moonlight-qt
     ninja
+    nerd-fonts.caskaydia-cove
     netcat
     networkmanagerapplet
     neovim
