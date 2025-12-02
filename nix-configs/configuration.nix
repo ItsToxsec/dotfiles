@@ -25,8 +25,8 @@ in
       #./Desktop/autologin.nix
       #./Desktop/nvidia.nix 
       #./Desktop/sunshine.nix
-      #./Laptop/apps.nix
-      #./Laptop/laptop.nix
+      ./Laptop/apps.nix
+      ./Laptop/laptop.nix
     ];
 
   # Bootloader.

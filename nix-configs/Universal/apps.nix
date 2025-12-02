@@ -110,6 +110,7 @@ environment.systemPackages = with pkgs; [
     tldr
     tmux
     tor
+    udiskie
     udisks
     unzip
     usbutils
@@ -126,11 +127,10 @@ environment.systemPackages = with pkgs; [
     wlsunset
     wofi
     xfce.thunar
+    xfce.thunar-volman
     xfce.xfwm4
     xwayland
     zoom-us
     zsh
-
-    pkgs.xfce.thunar-volman
   ];
 }

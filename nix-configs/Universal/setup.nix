@@ -82,5 +82,9 @@
 
   # QMK
   hardware.keyboard.qmk.enable = true;
+
+  # USB
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
   
 }
