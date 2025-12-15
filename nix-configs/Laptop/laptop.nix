@@ -2,7 +2,7 @@
 
 {
   # logind settings
-  services.logind = {
+  services.logind.settings.Login = {
     lidSwitchDocked = "suspend";
     lidSwitch = "suspend";
   };
@@ -17,4 +17,5 @@
       clickMethod = "clickfinger";
     };
   };
+  services.fprintd.enable = true;
 }

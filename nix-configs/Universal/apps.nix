@@ -90,9 +90,9 @@ environment.systemPackages = with pkgs; [
     polybar
     prismlauncher
     pulseaudio
-    python3
-    python312Packages.pip
-    python312Packages.west
+    python315
+    python313Packages.pip
+    python313Packages.west
     qemu_kvm
     qmk
     rofi
