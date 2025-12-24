@@ -132,5 +132,7 @@ environment.systemPackages = with pkgs; [
     xwayland
     zoom-us
     zsh
+    pkgsCross.avr.buildPackages.gcc
+    gcc-arm-embedded
   ];
 }
