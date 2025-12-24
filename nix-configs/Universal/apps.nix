@@ -23,6 +23,7 @@ environment.systemPackages = with pkgs; [
     discord
     distrobox
     docker
+    ethtool
     fastfetch 
     feh
     filezilla
@@ -112,6 +113,7 @@ environment.systemPackages = with pkgs; [
     tor
     udiskie
     udisks
+    unrar
     unzip
     usbutils
     vial
@@ -132,6 +134,11 @@ environment.systemPackages = with pkgs; [
     xwayland
     zoom-us
     zsh
+<<<<<<< HEAD
+=======
+
+    pkgs.xfce.thunar-volman
+>>>>>>> 7ed2d56 (updates)
     pkgsCross.avr.buildPackages.gcc
     gcc-arm-embedded
   ];
