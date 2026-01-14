@@ -88,6 +88,9 @@ in
     shell = pkgs.zsh;
   };
 
+  # AutoLogin
+  services.getty.autologinUser = "itstoxsec";
+
   # Suspend
   # boot.kernelParams = [ "mem_sleep_default=deep" ];
   # suspend-then-hibernate

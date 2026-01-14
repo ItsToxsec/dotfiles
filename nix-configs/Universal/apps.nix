@@ -69,6 +69,7 @@ environment.systemPackages = with pkgs; [
     meson
     # miraclecast
     moonlight-qt
+    mouseless
     ninja
     netcat
     networkmanagerapplet
