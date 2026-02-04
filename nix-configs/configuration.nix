@@ -27,6 +27,7 @@ in
       #./Desktop/sunshine.nix
       ./Laptop/apps.nix
       ./Laptop/laptop.nix
+      #./Universal/staticip.nix
     ];
 
   # Bootloader.

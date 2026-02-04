@@ -89,6 +89,7 @@ environment.systemPackages = with pkgs; [
     picom
     pipewire
     polybar
+    ppsspp
     prismlauncher
     pulseaudio
     python315
@@ -131,6 +132,7 @@ environment.systemPackages = with pkgs; [
     xfce.thunar-volman
     xfce.xfwm4
     xwayland
+    zed-editor
     zoom-us
     zsh
     pkgsCross.avr.buildPackages.gcc
