@@ -18,6 +18,7 @@ environment.systemPackages = with pkgs; [
     btop
     cargo
     #ciscoPacketTracer8
+    davinci-resolve
     dfu-programmer
     dfu-util
     discord
@@ -89,6 +90,7 @@ environment.systemPackages = with pkgs; [
     picom
     pipewire
     polybar
+    ppsspp
     prismlauncher
     pulseaudio
     python315
@@ -96,6 +98,7 @@ environment.systemPackages = with pkgs; [
     python313Packages.west
     qemu_kvm
     qmk
+    retroarch
     rofi
     rustup
     slurp
@@ -106,6 +109,7 @@ environment.systemPackages = with pkgs; [
     swayidle
     swaylock-effects
     swtpm
+#    teamspeak3
     terminator
     thunderbird
     tldr
@@ -134,12 +138,11 @@ environment.systemPackages = with pkgs; [
     xwayland
     zoom-us
     zsh
-<<<<<<< HEAD
-=======
-
-    pkgs.xfce.thunar-volman
->>>>>>> 7ed2d56 (updates)
     pkgsCross.avr.buildPackages.gcc
     gcc-arm-embedded
   ];
+
+#  nixpkgs.config.permittedInsecurePackages = [
+#    "qtwebengine-5.15.19"
+#  ];
 }

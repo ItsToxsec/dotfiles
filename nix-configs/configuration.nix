@@ -14,6 +14,7 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./Universal/amd.nix
       ./Universal/apps.nix
       ./Universal/docker.nix
       ./Universal/hyprland.nix
@@ -22,11 +23,12 @@ in
       #./Universal/dwm.nix
       #./Universal/i3wm.nix
       ./Desktop/apps.nix
-      #./Desktop/autologin.nix
+      ./Desktop/autologin.nix
       #./Desktop/nvidia.nix 
-      #./Desktop/sunshine.nix
-      ./Laptop/apps.nix
-      ./Laptop/laptop.nix
+      ./Desktop/steam.nix
+      ./Desktop/sunshine.nix
+      #./Laptop/apps.nix
+      #./Laptop/laptop.nix
     ];
 
   # Bootloader.

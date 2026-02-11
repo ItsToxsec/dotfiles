@@ -12,6 +12,9 @@
 environment.systemPackages = with pkgs; [
     coolercontrol.coolercontrol-gui
     coolercontrol.coolercontrold
+    ethtool
     sunshine
+    wakeonlan
   ];
+  #programs.coolercontrol.enable = true;
 }
