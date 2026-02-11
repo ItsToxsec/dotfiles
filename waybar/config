@@ -185,6 +185,18 @@
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-    }
+    },
+	"custom/gpu-temp": {
+		"exec": "cat /sys/class/hwmon/hwmon2/temp1_input",
+		"format": "{icon} {}°C",
+		"return-type": "",
+		"interval": 1
+	},
+	"custom/gpu-usage": {
+	  	"exec": "cat /sys/class/hwmon/hwmon2/device/gpu_busy_percent",
+	  	"format": "GPU: {}%",
+	 	 "return-type": "",
+	 	 "interval": 1
+	}
 }
 
