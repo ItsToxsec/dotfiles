@@ -6,7 +6,7 @@
     "spacing": 6, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces"],
-    "modules-right": ["custom/pipewire", "pulseaudio","network", "cpu",  "memory", "temperature", "backlight", "battery", "clock"],
+    "modules-right": ["custom/pipewire", "pulseaudio","network", "cpu", "custom/gpu-temp", "custom/gpu-usage", "memory", "temperature", "backlight", "battery", "clock"],
     // Modules configuration
     // "sway/workspaces": {
     //	"spacing": 4,
