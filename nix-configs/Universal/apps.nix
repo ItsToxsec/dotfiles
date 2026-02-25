@@ -17,7 +17,7 @@ environment.systemPackages = with pkgs; [
     brightnessctl
     btop
     cargo
-    #ciscoPacketTracer8
+    cisco-packet-tracer_9
     dfu-programmer
     dfu-util
     discord
@@ -97,6 +97,7 @@ environment.systemPackages = with pkgs; [
     python313Packages.west
     qemu_kvm
     qmk
+    retroarch
     rofi
     rustup
     slurp
@@ -108,6 +109,8 @@ environment.systemPackages = with pkgs; [
     swaylock-effects
     swtpm
     terminator
+    thunar
+    thunar-volman
     thunderbird
     tldr
     tmux
@@ -128,9 +131,7 @@ environment.systemPackages = with pkgs; [
     wireshark
     wlsunset
     wofi
-    xfce.thunar
-    xfce.thunar-volman
-    xfce.xfwm4
+    xfwm4
     xwayland
     zed-editor
     zoom-us
