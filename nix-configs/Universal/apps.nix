@@ -1,9 +1,6 @@
 { inputs, config, pkgs, ... }:
 
 {
-  # Install firefox.
-  programs.firefox.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -24,6 +21,7 @@ environment.systemPackages = with pkgs; [
     discord
     distrobox
     docker
+    dxvk
     ethtool
     fastfetch 
     feh
@@ -31,6 +29,7 @@ environment.systemPackages = with pkgs; [
     firefox
     fprintd
     freerdp
+    freetype
     freetube
     fwupd
     fzf
@@ -71,6 +70,7 @@ environment.systemPackages = with pkgs; [
     meson
     # miraclecast
     moonlight-qt
+    #mullvad-browser
     ninja
     netcat
     networkmanagerapplet
@@ -83,6 +83,7 @@ environment.systemPackages = with pkgs; [
     openvpn
     orca-slicer
     OVMFFull
+    p7zip
     pamixer
     parsec-bin
     pavucontrol
@@ -109,7 +110,8 @@ environment.systemPackages = with pkgs; [
     swayidle
     swaylock-effects
     swtpm
-#    teamspeak3
+    tailscale
+    teamspeak6-client
     terminator
     thunderbird
     tldr
@@ -123,11 +125,14 @@ environment.systemPackages = with pkgs; [
     vial
     virt-manager
     virtiofsd
+    vivaldi
     #vmware-workstation
     vscode
     waybar
     wget
+    wine
     winetricks
+    wine-staging
     wireplumber
     wireshark
     wlsunset
@@ -141,8 +146,4 @@ environment.systemPackages = with pkgs; [
     pkgsCross.avr.buildPackages.gcc
     gcc-arm-embedded
   ];
-
-#  nixpkgs.config.permittedInsecurePackages = [
-#    "qtwebengine-5.15.19"
-#  ];
 }

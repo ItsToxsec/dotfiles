@@ -19,7 +19,7 @@
     //         "3": "",
     //         "4": "",
     //         "5": "",
-    //         "urgent": "",
+    //         "urgent": "",gpu
     //         "focused": "",
     //         "default": ""
     //     }
@@ -112,7 +112,7 @@
     },
     "temperature": {
         // "thermal-zone": 2,
-        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "hwmon-path": "/sys/class/hwmon/hwmon4/temp1_input",
         "critical-threshold": 90,
         // "format-critical": "{temperatureC}°C {icon}",
         "format": "{temperatureC}°C {icon}",
@@ -186,17 +186,20 @@
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
-	"custom/gpu-temp": {
-		"exec": "cat /sys/class/hwmon/hwmon2/temp1_input",
-		"format": "{icon} {}°C",
-		"return-type": "",
-		"interval": 1
+	"custom/gputemp": {
+        // "thermal-zone": 2,
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 90,
+        // "format-critical": "{temperatureC}°C {icon}",
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": [""]
 	},
-	"custom/gpu-usage": {
-	  	"exec": "cat /sys/class/hwmon/hwmon2/device/gpu_busy_percent",
-	  	"format": "GPU: {}%",
-	 	 "return-type": "",
-	 	 "interval": 1
-	}
+    "custom/gpu-usage": {
+        "format": "{} {icon}",
+        "exec": "gpu-usage-waybar",
+        "return-type": "json",
+        "format-icons": "󰾲",
+        "on-click": "ghostty -e nvtop",
+    }
 }
 

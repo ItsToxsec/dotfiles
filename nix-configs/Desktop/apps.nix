@@ -13,8 +13,14 @@ environment.systemPackages = with pkgs; [
     coolercontrol.coolercontrol-gui
     coolercontrol.coolercontrold
     ethtool
+    node-gyp
     sunshine
     wakeonlan
   ];
-  #programs.coolercontrol.enable = true;
+  programs.coolercontrol.enable = true;
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "dotnet-runtime-6.0.36"
+  ];
+
 }

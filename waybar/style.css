@@ -1,6 +1,8 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: "CaskaydiaCove Nerd Font Mono", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-family:
+        'CaskaydiaCove Nerd Font Mono', FontAwesome, Roboto, Helvetica, Arial,
+        sans-serif;
     font-size: 14px;
     border-radius: 4px;
     background-color: transparent;
@@ -8,7 +10,7 @@
 
 window#waybar {
     color: #0076ed;
-    transition-duration: .5s;
+    transition-duration: 0.5s;
     border-radius: 0;
 }
 
@@ -26,7 +28,7 @@ window#waybar.solo {
 */
 
 window#waybar.termite {
-    background-color: #3F3F3F;
+    background-color: #3f3f3f;
 }
 
 window#waybar.chromium {
@@ -70,7 +72,7 @@ button:hover {
 }
 
 #mode {
-    background-color: #64727D;
+    background-color: #64727d;
     border-bottom: 3px solid #ffffff;
 }
 
@@ -90,7 +92,8 @@ button:hover {
 #mode,
 #idle_inhibitor,
 #scratchpad,
-#mpd {
+#mpd,
+#custom-gputemp {
     padding: 0 10px;
     margin: 2px 3px;
     color: #0076ed;
@@ -118,12 +121,12 @@ button:hover {
     margin-right: 0;
 }
 
-
 #battery {
     color: #0076ed;
 }
 
-#battery.charging, #battery.plugged {
+#battery.charging,
+#battery.plugged {
     color: #0076ed;
 }
 
@@ -142,7 +145,6 @@ button:hover {
     animation-direction: alternate;
 }
 
-
 #cpu {
     color: #0076ed;
 }
@@ -159,13 +161,10 @@ button:hover {
     color: #0076ed;
 }
 
-
 #custom-media {
     color: #0076ed;
     min-width: 100px;
 }
-
-
 
 #tray > .passive {
     -gtk-icon-effect: dim;
@@ -174,7 +173,6 @@ button:hover {
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
 }
-
 
 #idle_inhibitor.activated {
     color: #0076ed;
@@ -211,4 +209,3 @@ button:hover {
 #scratchpad {
     background: rgba(0, 0, 0, 0.2);
 }
-

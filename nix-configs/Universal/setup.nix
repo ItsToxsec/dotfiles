@@ -87,4 +87,18 @@
   services.gvfs.enable = true;
   services.udisks2.enable = true;
   
+  # Lutris
+  hardware.opengl.driSupport32Bit = true; # Needed for 32-bit Wine
+  hardware.graphics = {
+    enable = true;
+    # Required for 32-bit support (e.g., Wine/Steam)
+    enable32Bit = true;
+    
+    # Optional: Install specific 32-bit drivers if needed, 
+    # though usually handled by enable32Bit
+    extraPackages32 = with pkgs; [
+      driversi686Linux.mesa # Includes mesa-vulkan-drivers:i386
+    ];
+  };
+
 }
