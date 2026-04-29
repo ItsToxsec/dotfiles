@@ -17,6 +17,7 @@ in
       ./Universal/apps.nix
       ./Universal/docker.nix
       ./Universal/hyprland.nix
+      #./Univeral/niri.nix
       ./Universal/setup.nix
       #./Universal/affinity.nix
       #./Universal/dwm.nix

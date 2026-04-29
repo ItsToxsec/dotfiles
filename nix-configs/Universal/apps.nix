@@ -17,7 +17,7 @@ environment.systemPackages = with pkgs; [
     brightnessctl
     btop
     cargo
-    cisco-packet-tracer_9
+    #cisco-packet-tracer_9
     dfu-programmer
     dfu-util
     discord
@@ -31,6 +31,7 @@ environment.systemPackages = with pkgs; [
     freerdp
     freetube
     fwupd
+    fuzzel
     fzf
     gcc
     gh
@@ -70,11 +71,12 @@ environment.systemPackages = with pkgs; [
     # miraclecast
     moonlight-qt
     mouseless
-    ninja
     netcat
     networkmanagerapplet
     neovim
     nfs-utils
+    ninja
+    niri
     nitrogen
     nodejs_20
     npins
@@ -99,6 +101,8 @@ environment.systemPackages = with pkgs; [
     qmk
     retroarch
     rofi
+    #ruby_4_0
+    #rubyPackages_4_0.rails
     rustup
     slurp
     spotify
@@ -109,8 +113,6 @@ environment.systemPackages = with pkgs; [
     swaylock-effects
     swtpm
     terminator
-    thunar
-    thunar-volman
     thunderbird
     tldr
     tmux
@@ -131,10 +133,12 @@ environment.systemPackages = with pkgs; [
     wireshark
     wlsunset
     wofi
-    xfwm4
+    xfce.thunar
+    xfce.thunar-volman
+    #xfwm4
     xwayland
     zed-editor
-    zoom-us
+    #zoom-us
     zsh
     pkgsCross.avr.buildPackages.gcc
     gcc-arm-embedded
