@@ -7,8 +7,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
 environment.systemPackages = with pkgs; [
+    amdgpu_top
     audacity
     auto-cpufreq
+    azahar
     blueman
     brave
     brightnessctl
@@ -113,6 +115,8 @@ environment.systemPackages = with pkgs; [
     tailscale
     teamspeak6-client
     terminator
+    thunar
+    thunar-volman
     thunderbird
     tldr
     tmux
@@ -137,8 +141,6 @@ environment.systemPackages = with pkgs; [
     wireshark
     wlsunset
     wofi
-    xfce.thunar
-    xfce.thunar-volman
     xfce.xfwm4
     xwayland
     zoom-us
