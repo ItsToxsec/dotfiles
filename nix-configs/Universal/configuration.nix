@@ -14,22 +14,20 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./Universal/amd.nix
       ./Universal/apps.nix
       ./Universal/docker.nix
       ./Universal/hyprland.nix
+      #./Univeral/niri.nix
       ./Universal/setup.nix
       #./Universal/affinity.nix
       #./Universal/dwm.nix
       #./Universal/i3wm.nix
-      #./Desktop/apps.nix
+      ./Desktop/apps.nix
       #./Desktop/autologin.nix
       #./Desktop/nvidia.nix 
-      #./Desktop/steam.nix
       #./Desktop/sunshine.nix
-      #/Laptop/apps.nix
+      ./Laptop/apps.nix
       ./Laptop/laptop.nix
-      #./Universal/staticip.nix
     ];
 
   # Bootloader.
@@ -90,6 +88,9 @@ in
     extraGroups = [ "networkmanager" "wheel" "video" "kvm" "libvirtd" "docker" "wireshark" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
   };
+
+  # AutoLogin
+  services.getty.autologinUser = "itstoxsec";
 
   # Suspend
   # boot.kernelParams = [ "mem_sleep_default=deep" ];

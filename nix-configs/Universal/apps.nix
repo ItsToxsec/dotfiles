@@ -36,6 +36,7 @@ environment.systemPackages = with pkgs; [
     freetype
     freetube
     fwupd
+    fuzzel
     fzf
     gcc
     gh
@@ -74,12 +75,18 @@ environment.systemPackages = with pkgs; [
     meson
     # miraclecast
     moonlight-qt
+<<<<<<< HEAD
     #mullvad-browser
     ninja
+=======
+    mouseless
+>>>>>>> c0b82242016554b63183d849829df95eab7e8ff8
     netcat
     networkmanagerapplet
     unstable.neovim
     nfs-utils
+    ninja
+    niri
     nitrogen
     nodejs_20
     npins
@@ -105,6 +112,8 @@ environment.systemPackages = with pkgs; [
     qmk
     retroarch
     rofi
+    #ruby_4_0
+    #rubyPackages_4_0.rails
     rustup
     slurp
     spotify
@@ -143,9 +152,10 @@ environment.systemPackages = with pkgs; [
     wofi
     xfce.thunar
     xfce.thunar-volman
-    xfce.xfwm4
+    #xfwm4
     xwayland
-    zoom-us
+    zed-editor
+    #zoom-us
     zsh
     pkgsCross.avr.buildPackages.gcc
     gcc-arm-embedded
