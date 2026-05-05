@@ -1,5 +1,7 @@
 { inputs, config, pkgs, ... }:
-
+let unstable = import <unstable>
+  { config = {allowUnfree = true; }; };
+in
 {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -16,8 +18,8 @@ environment.systemPackages = with pkgs; [
     brightnessctl
     btop
     cargo
-    #ciscoPacketTracer8
-    davinci-resolve
+    unstable.cisco-packet-tracer_9
+    #davinci-resolve
     dfu-programmer
     dfu-util
     discord
@@ -51,10 +53,10 @@ environment.systemPackages = with pkgs; [
     gvfs
     home-manager
     htop
-    hypridle
-    hyprlock
-    hyprland
-    hyprshade
+    unstable.hypridle
+    unstable.hyprlock
+    unstable.hyprland
+    unstable.hyprshade
     kdePackages.sddm 
     #kicad
     krita
@@ -68,7 +70,7 @@ environment.systemPackages = with pkgs; [
     lxappearance
     lxqt.lxqt-policykit
     macchanger
-    mariadb
+    #mariadb
     meson
     # miraclecast
     moonlight-qt
@@ -76,7 +78,7 @@ environment.systemPackages = with pkgs; [
     ninja
     netcat
     networkmanagerapplet
-    neovim
+    unstable.neovim
     nfs-utils
     nitrogen
     nodejs_20
@@ -115,8 +117,6 @@ environment.systemPackages = with pkgs; [
     tailscale
     teamspeak6-client
     terminator
-    thunar
-    thunar-volman
     thunderbird
     tldr
     tmux
@@ -131,7 +131,7 @@ environment.systemPackages = with pkgs; [
     virtiofsd
     vivaldi
     #vmware-workstation
-    vscode
+    unstable.vscode
     waybar
     wget
     wine
@@ -141,6 +141,8 @@ environment.systemPackages = with pkgs; [
     wireshark
     wlsunset
     wofi
+    xfce.thunar
+    xfce.thunar-volman
     xfce.xfwm4
     xwayland
     zoom-us
