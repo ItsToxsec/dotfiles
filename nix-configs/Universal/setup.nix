@@ -45,6 +45,7 @@
         ll = "ls -la";
         clc = "clear";
         update = "sudo nixos-rebuild switch";
+        channel-update = "sudo nix-channel --update";
       };
       ohMyZsh = {
         enable = true;
@@ -75,10 +76,6 @@
 
   # Dark Theme
   environment.variables.GTK_THEME = "Adwaita:dark";  # 
-  
-  # Wireshark
-  programs.wireshark.enable = true;
-  users.groups.wireshark = {};
 
   # QMK
   hardware.keyboard.qmk.enable = true;

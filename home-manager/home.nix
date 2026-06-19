@@ -55,6 +55,7 @@
       vim = "nvim";
       ll = "ls -la";
       update = "sudo nixos-rebuild switch";
+      channel-update = "sudo nix-channel --update";
     };
     autosuggestion.enable = true;
     oh-my-zsh = {

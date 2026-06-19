@@ -18,7 +18,7 @@ environment.systemPackages = with pkgs; [
     brightnessctl
     btop
     cargo
-    unstable.cisco-packet-tracer_9
+    #unstable.cisco-packet-tracer_9
     #davinci-resolve
     dfu-programmer
     dfu-util
@@ -28,6 +28,7 @@ environment.systemPackages = with pkgs; [
     dxvk
     ethtool
     fastfetch 
+    fdupes
     feh
     filezilla
     firefox
@@ -58,6 +59,7 @@ environment.systemPackages = with pkgs; [
     unstable.hyprlock
     unstable.hyprland
     unstable.hyprshade
+    imagemagick
     kdePackages.sddm 
     #kicad
     krita
@@ -75,12 +77,8 @@ environment.systemPackages = with pkgs; [
     meson
     # miraclecast
     moonlight-qt
-<<<<<<< HEAD
-    #mullvad-browser
-    ninja
-=======
     mouseless
->>>>>>> c0b82242016554b63183d849829df95eab7e8ff8
+    mousepad
     netcat
     networkmanagerapplet
     unstable.neovim
@@ -88,7 +86,7 @@ environment.systemPackages = with pkgs; [
     ninja
     niri
     nitrogen
-    nodejs_20
+    nodejs_26
     npins
     oh-my-zsh
     openvpn
@@ -138,6 +136,7 @@ environment.systemPackages = with pkgs; [
     vial
     virt-manager
     virtiofsd
+    virtualenv
     vivaldi
     #vmware-workstation
     unstable.vscode

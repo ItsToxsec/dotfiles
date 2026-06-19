@@ -19,6 +19,7 @@ in
       ./Universal/docker.nix
       ./Universal/hyprland.nix
       ./Universal/setup.nix
+      ./Universal/wireshark.nix
       #./Universal/affinity.nix
       #./Universal/dwm.nix
       #./Universal/i3wm.nix
@@ -72,6 +73,7 @@ in
     }; 
     services.displayManager.sddm = {
       enable = true;
+      wayland.enable = true;
     };
     
     
