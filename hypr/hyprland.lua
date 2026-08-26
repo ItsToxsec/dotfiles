@@ -10,6 +10,13 @@ hl.monitor({
     output   = "",
     mode     = "highres",
     position = "auto",
+    scale    = 1.0,
+})
+
+hl.monitor({
+    output   = "eDP-1",
+    mode     = "highres",
+    position = "auto",
     scale    = 1.33,
 })
 
@@ -23,9 +30,9 @@ hl.monitor({
 hl.monitor({
     output   = "DP-2",
     mode     = "1920x1080",
-    position = "-1080x-660",
+    position = "-1080x660",
     scale    = 1.000,
-    transform = 1,
+    transform = 3,
 })
 
 hl.monitor({
