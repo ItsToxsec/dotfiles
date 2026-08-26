@@ -44,12 +44,13 @@ environment.systemPackages = with pkgs; [
     gimp
     git
     glibc
-    go
-    gnome-font-viewer
+    me-font-viewer
     gnome-network-displays
-    gnumake
+    gnumakego
+    gno
     gparted
     gpg-tui
+    grayjay
     grim
     gtk3
     gvfs
