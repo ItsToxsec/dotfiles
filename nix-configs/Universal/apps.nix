@@ -59,6 +59,7 @@ environment.systemPackages = with pkgs; [
     unstable.hyprlock
     unstable.hyprland
     unstable.hyprshade
+    unstable.hyprpaper
     imagemagick
     kdePackages.sddm 
     #kicad
