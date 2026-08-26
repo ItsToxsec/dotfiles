@@ -1,3 +1,2 @@
 sudo nix-channel --update
-sudo nixos-rebuild switch
-
+sudo nixos-rebuild switch --rebuild
