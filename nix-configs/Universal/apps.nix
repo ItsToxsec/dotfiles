@@ -108,6 +108,7 @@ environment.systemPackages = with pkgs; [
     python313Packages.west
     qemu_kvm
     qmk
+    quickshell
     retroarch
     rofi
     #ruby_4_0
@@ -124,6 +125,8 @@ environment.systemPackages = with pkgs; [
     tailscale
     teamspeak6-client
     terminator
+    thunar
+    thunar-volman
     thunderbird
     tldr
     tmux
@@ -149,8 +152,6 @@ environment.systemPackages = with pkgs; [
     wireshark
     wlsunset
     wofi
-    xfce.thunar
-    xfce.thunar-volman
     #xfwm4
     xwayland
     zed-editor
