@@ -54,7 +54,7 @@
         ];
       };
     };
-   programs.zsh.shellInit = "~/dotfiles/.zshrc";
+   programs.zsh.shellInit = "~/dotfiles/Shells/.zshrc";
 
   programs.steam.enable = true;
   # virtualisation.vmware.host.enable = true;
