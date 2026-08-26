@@ -68,8 +68,6 @@ environment.systemPackages = with pkgs; [
     # libsForQt5.kdenlive
     libvirt
     lsd
-    lutris
-    lunar-client #minecraft
     lxappearance
     lxqt.lxqt-policykit
     macchanger
@@ -77,14 +75,12 @@ environment.systemPackages = with pkgs; [
     meson
     # miraclecast
     moonlight-qt
-    mouseless
     mousepad
     netcat
     networkmanagerapplet
     unstable.neovim
     nfs-utils
     ninja
-    niri
     nitrogen
     nodejs_26
     npins

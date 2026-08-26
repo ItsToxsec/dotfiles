@@ -21,16 +21,8 @@ in
       ./Universal/setup.nix
       ./Universal/wireshark.nix
       #./Universal/affinity.nix
-      #./Universal/dwm.nix
-      #./Universal/i3wm.nix
-      #./Desktop/apps.nix
-      #./Desktop/autologin.nix
-      #./Desktop/nvidia.nix 
-      #./Desktop/steam.nix
-      #./Desktop/sunshine.nix
-      #/Laptop/apps.nix
+      ./Laptop/apps.nix
       ./Laptop/laptop.nix
-      #./Universal/staticip.nix
     ];
 
   # Bootloader.
