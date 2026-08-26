@@ -1,0 +1,5 @@
+# Dynamically link the correct host config on startup
+exec-once = echo "source = ~/.config/hypr/monitor-$(hostnamectl hostname).conf" > ~/.config/hypr/host-monitor.conf
+
+# Load the generated monitor file
+source = ~/.config/hypr/host-monitor.conf
