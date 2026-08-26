@@ -104,7 +104,6 @@ environment.systemPackages = with pkgs; [
     python313Packages.pip
     python313Packages.west
     qemu_kvm
-    qmk
     quickshell
     retroarch
     rofi
@@ -115,9 +114,6 @@ environment.systemPackages = with pkgs; [
     spotify
     sqlite
     steam
-    swaybg
-    swayidle
-    swaylock-effects
     swtpm
     tailscale
     teamspeak6-client
@@ -137,7 +133,6 @@ environment.systemPackages = with pkgs; [
     virt-manager
     virtiofsd
     virtualenv
-    vivaldi
     #vmware-workstation
     unstable.vscode
     waybar
