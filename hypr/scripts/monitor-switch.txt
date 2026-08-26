@@ -3,3 +3,8 @@ exec-once = echo "source = ~/.config/hypr/monitor-$(hostnamectl hostname).conf" 
 
 # Load the generated monitor file
 source = ~/.config/hypr/host-monitor.conf
+
+
+EX:
+monitor-laptop.conf: monitor = eDP-1, preferred, 0x0, 1
+monitor-desktop.conf: monitor = DP-1, 1920x1080@144, 0x0, 1
