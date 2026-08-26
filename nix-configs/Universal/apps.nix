@@ -94,7 +94,7 @@ environment.systemPackages = with pkgs; [
     OVMFFull
     p7zip
     pamixer
-    parsec-bin
+    #parsec-bin
     pavucontrol
     pcsx2
     picom

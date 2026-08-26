@@ -10,7 +10,7 @@ hl.monitor({
     output   = "",
     mode     = "highres",
     position = "auto",
-    scale    = 1.0,
+    scale    = 1.33,
 })
 
 hl.monitor({
