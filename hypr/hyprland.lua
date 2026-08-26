@@ -67,10 +67,6 @@ hl.monitor({
 
 -- screen timeout
 
--- exec-once = swayidle -w timeout 5 'if pgrep -x swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --fade-in 0.2; then hyprctl dispatch dpms off; fi' resume 'hyprctl dispatch dpms on'
-
--- exec-once = swayidle -w timeout 900 'swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --fade-in 0.2' timeout 930 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on' before-sleep 'swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --fade-in 0.2' after-resume 'sleep .2; systemctl --user restart waybar'
-
 -- Source a file (multi-file configs)
 
 -- source = ~/.config/hypr/myColors.conf
@@ -512,6 +508,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("lxqt-policykit-agent")
     hl.exec_cmd("hypridle >> ~/hypridle.log")
     hl.exec_cmd("brave")
+    hl.exec_cmd("hyprpaper")
 end)
 
 -- Exec (run every reload)
@@ -519,6 +516,5 @@ hl.on("config.reloaded", function()
     hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme Adwaita")
     hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme prefer-dark")
     hl.exec_cmd("pkill waybar; waybar")
-    hl.exec_cmd("swaybg -m fill -i /home/itstoxsec/Pictures/Custom/BoyDreamCarR33Black.png")
     hl.exec_cmd("hyprshade auto")
 end)
