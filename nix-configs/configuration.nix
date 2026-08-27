@@ -19,6 +19,7 @@ in
       ./Universal/docker.nix
       ./Universal/hyprland.nix
       ./Universal/setup.nix
+      ./Universal/sddm.nix
       ./Universal/wireshark.nix
       #./Universal/affinity.nix
       ./Laptop/apps.nix
