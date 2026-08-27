@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -u
+cmd="${1:-}"; shift || true
+BAT=/sys/class/power_supply/BAT1
+notify() { command -v notify-send >/dev/null && notify-send "$@" || true; }
+case "$cmd" in
+  battery-status)
+    if [[ ! -r "$BAT/capacity" ]]; then
+      echo 'percentage\t-1%'
+      echo 'fraction\t0'
+      echo 'status\tUnknown'
+      exit 0
+    fi
+    cap=$(cat "$BAT/capacity" 2>/dev/null || echo -1)
+    status=$(cat "$BAT/status" 2>/dev/null || echo Unknown)
+    printf 'percentage\t%s%%\nfraction\t%.4f\nstatus\t%s\n' "$cap" "$(awk -v c="$cap" 'BEGIN{print c/100}')" "$status"
+    if [[ -r "$BAT/energy_full" ]]; then
+      ef=$(cat "$BAT/energy_full"); printf 'size\t%.2f Wh\n' "$(awk -v x="$ef" 'BEGIN{print x/1000000}')"
+    elif [[ -r "$BAT/charge_full" ]]; then
+      cf=$(cat "$BAT/charge_full"); printf 'size\t%.2f Ah\n' "$(awk -v x="$cf" 'BEGIN{print x/1000000}')"
+    fi
+    ;;
+  battery-low) notify "Battery low" "Battery at ${1:-unknown}%" ;;
+  notification-send) notify "$@" ;;
+  powerprofiles-list)
+    if command -v powerprofilesctl >/dev/null 2>&1; then
+      active=$(powerprofilesctl get 2>/dev/null || true)
+      powerprofilesctl list 2>/dev/null | sed -n 's/^\s*\([a-z-]*\):.*/\1/p' | while read -r p; do [[ -n "$p" ]] && printf '%s\t%s\n' "$p" "$([[ "$p" == "$active" ]] && echo 1 || echo 0)"; done
+    else printf 'balanced\t1\n'; fi
+    ;;
+  powerprofiles-set)
+    if command -v powerprofilesctl >/dev/null 2>&1; then
+      profile="${2:-balanced}"; powerprofilesctl set "$profile" 2>/dev/null || true
+    fi
+    ;;
+  system-stats)
+    awk '/MemTotal:/{t=$2}/MemAvailable:/{a=$2} END{printf "memory\t%.0f%%\n", (1-a/t)*100}' /proc/meminfo
+    ;;
+  clipboard-paste-text) shift || true; command -v wtype >/dev/null && wtype "$(wl-paste 2>/dev/null)" || true ;;
+  clipboard-paste-file) shift || true; command -v wl-paste >/dev/null && wl-paste --type text 2>/dev/null | xargs -0 -r -n1 true || true ;;
+  clipboard-open) command -v cliphist >/dev/null && cliphist list | wofi --dmenu | cliphist decode | wl-copy || true ;;
+  menu-emoji-insert) command -v wtype >/dev/null && wtype "${1:-}" || true ;;
+  launch-browser) command -v xdg-open >/dev/null && xdg-open "$1" >/dev/null 2>&1 & ;;
+  launch-screensaver) command -v swaylock >/dev/null && swaylock --daemonize >/dev/null 2>&1 || true ;;
+  hyprland-focus-app) command -v hyprctl >/dev/null && hyprctl dispatch focuswindow "${1:-}" >/dev/null 2>&1 || true ;;
+  bluetooth-power) command -v bluetoothctl >/dev/null && bluetoothctl power "${1:-on}" >/dev/null 2>&1 || true ;;
+  bluetooth-device) command -v bluetoothctl >/dev/null && bluetoothctl "$@" >/dev/null 2>&1 || true ;;
+  toggle-nightlight) command -v hyprshade >/dev/null && hyprshade "$@" || true ;;
+  *) exit 0 ;;
+esac

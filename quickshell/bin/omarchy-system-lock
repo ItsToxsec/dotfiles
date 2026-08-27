@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if command -v qs >/dev/null 2>&1; then
+  result="$(qs ipc call lock lock 2>&1 || true)"
+  if [[ "$result" == *"ok"* ]]; then
+    exit 0
+  fi
+  printf 'Omarchy lock IPC failed: %s\n' "$result" >&2
+  exit 1
+fi
+echo "qs is not available; cannot invoke the Quickshell lock screen" >&2
+exit 127

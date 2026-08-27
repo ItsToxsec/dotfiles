@@ -1,0 +1,18 @@
+{
+  "apps": {"icon":"󰀻","label":"Apps","aliases":["app","applications"],"provider":"apps"},
+  "learn": {"icon":"󰧑","label":"Learn"},
+  "trigger": {"icon":"󱓞","label":"Trigger"},
+  "style": {"icon":"","label":"Style"},
+  "setup": {"icon":"","label":"Setup","aliases":["settings"]},
+  "system": {"icon":"","label":"System","aliases":["power-menu"]},
+  "system.lock": {"icon":"","label":"Lock","action":"omarchy-system-lock"},
+  "system.suspend": {"icon":"󰒲","label":"Suspend","action":"systemctl suspend"},
+  "system.hibernate": {"icon":"󰤄","label":"Hibernate","action":"systemctl hibernate"},
+  "system.reboot": {"icon":"󰜉","label":"Reboot","action":"systemctl reboot"},
+  "system.shutdown": {"icon":"󰐥","label":"Power Off","action":"systemctl poweroff"},
+  "learn.hyprland": {"icon":"","label":"Hyprland","action":"xdg-open https://wiki.hyprland.org/"},
+  "learn.quickshell": {"icon":"󰒲","label":"Quickshell","action":"xdg-open https://quickshell.org/"},
+  "trigger.terminal": {"icon":"","label":"Terminal","action":"ghostty"},
+  "trigger.file-manager": {"icon":"","label":"Files","action":"thunar"},
+  "style.bar": {"icon":"󰍜","label":"Menu Bar"}
+}

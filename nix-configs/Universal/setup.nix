@@ -97,5 +97,7 @@
       driversi686Linux.mesa # Includes mesa-vulkan-drivers:i386
     ];
   };
-
+  
+  # Power profiles
+  services.power-profiles-daemon.enable = true;
 }

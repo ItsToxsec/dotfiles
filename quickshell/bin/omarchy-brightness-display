@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+action="${1:-}"
+if command -v hyprctl >/dev/null 2>&1; then
+  case "$action" in
+    off) hyprctl dispatch dpms off >/dev/null 2>&1 || true ;;
+    on)  hyprctl dispatch dpms on  >/dev/null 2>&1 || true ;;
+  esac
+fi

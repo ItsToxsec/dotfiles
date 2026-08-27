@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Keyboard-backlight blanking is optional on the NixOS port.
+# The display DPMS helper performs the secure screen blanking.
+exit 0

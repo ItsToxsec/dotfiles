@@ -2,6 +2,8 @@
 -- https://github.com/yourusername/hyprconf2lua
 -- Manual review may be needed for complex directives
 
+--require("hyprland-alt.lua")
+
 ---@module 'hl'
 
 -- See https://wiki.hyprland.org/Configuring/Monitors/
@@ -111,7 +113,7 @@ hl.config({
     general = {
         -- See https://wiki.hyprland.org/Configuring/Variables/ for more
         gaps_in = 2,
-        gaps_out = 5,
+        gaps_out = 0,
         border_size = 2,
         layout = "dwindle",
         col = {
@@ -198,7 +200,10 @@ hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. "M", hl.dsp.exec_cmd("swaylock -
 
 hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. "SPACE", hl.dsp.window.float())
 
-hl.bind(mainMod .. " + " .. "D", hl.dsp.exec_cmd("wofi --show drun"))
+-- hl.bind(mainMod .. " + " .. "D", hl.dsp.exec_cmd("wofi --show drun"))
+hl.bind("ALT + D", hl.dsp.exec_cmd(
+    "qs ipc call shell toggle omarchy.menu '{\"menu\":\"root\"}'"
+))
 
 hl.bind(mainMod .. " + " .. "RETURN", hl.dsp.exec_cmd("terminator"))
 
@@ -516,6 +521,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("hypridle >> ~/hypridle.log")
     hl.exec_cmd("brave")
     hl.exec_cmd("hyprpaper")
+    --hl.exec_cmd("qs")
 end)
 
 -- Exec (run every reload)
@@ -525,3 +531,14 @@ hl.on("config.reloaded", function()
     hl.exec_cmd("pkill waybar; waybar")
     hl.exec_cmd("hyprshade auto")
 end)
+
+-- Omarchy Quattro shortcut adapter for the user's Hyprland Lua config.
+-- Omarchy's SUPER modifier is intentionally replaced with LEFT ALT.
+-- Add these binds to your existing hyprland.lua after resolving any collisions.
+
+hl.bind(altMod .. " + " .. "SPACE", hl.dsp.exec_cmd("omarchy-shell shell toggle omarchy.menu '{\"menu\":\"root\"}'"))
+hl.bind(mainMod .. " + " .. "V", hl.dsp.exec_cmd("omarchy-shell shell toggle omarchy.clipboard"))
+hl.bind(mainMod .. " + " .. "N", hl.dsp.exec_cmd("omarchy-shell shell toggle omarchy.notifications"))
+
+-- Workspace navigation remains with your existing ALT+number bindings.
+-- Do not duplicate your existing ALT bindings; merge these selectively.

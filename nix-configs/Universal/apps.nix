@@ -44,10 +44,10 @@ environment.systemPackages = with pkgs; [
     gimp
     git
     glibc
-    me-font-viewer
+    gnome-font-viewer
     gnome-network-displays
-    gnumakego
-    gno
+    gnumake
+    go
     gparted
     gpg-tui
     grayjay
@@ -105,7 +105,7 @@ environment.systemPackages = with pkgs; [
     python313Packages.pip
     python313Packages.west
     qemu_kvm
-    quickshell
+    unstable.quickshell
     retroarch
     rofi
     #ruby_4_0
