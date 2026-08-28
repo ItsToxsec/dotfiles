@@ -51,6 +51,9 @@
         {
           "id": "qs.power",
           "showPercentage": true
+        },
+        {
+          "id": "qs.power-controls"
         }
       ]
     }

@@ -145,7 +145,7 @@ ShellRoot {
   }
 
   Component.onCompleted: {
-    console.log("qs-shell paths",
+console.log("qs-shell paths",
       "qsPath=" + shell.qsPath,
       "shellDir=" + Quickshell.shellDir,
       "firstPartyPluginsDir=" + shell.firstPartyPluginsDir,

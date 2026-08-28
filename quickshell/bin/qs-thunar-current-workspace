@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -u
 
 resolve_bin() {
   local name="$1" p
@@ -9,66 +9,10 @@ resolve_bin() {
     "/etc/profiles/per-user/${USER:-}/bin/$name" \
     "$HOME/.nix-profile/bin/$name"
   do
-    if [ -x "$p" ]; then printf '%s\n' "$p"; return 0; fi
+    [ -x "$p" ] && { printf '%s\n' "$p"; return 0; }
   done
-  command -v "$name" 2>/dev/null || return 1
+  command -v "$name" 2>/dev/null
 }
 
-HYPRCTL="$(resolve_bin hyprctl)"
 THUNAR="$(resolve_bin thunar)"
-JQ="$(resolve_bin jq || true)"
-
-workspace=""
-if [ -n "$JQ" ]; then
-  workspace="$("$HYPRCTL" -j activeworkspace 2>/dev/null | "$JQ" -r '.id // empty')"
-fi
-if [ -z "$workspace" ]; then
-  workspace="$("$HYPRCTL" activeworkspace 2>/dev/null | awk '/workspace ID/{print $3; exit}')"
-fi
-
-if [ -z "$workspace" ]; then
-  exec "$THUNAR" --new-window "$@"
-fi
-
-# Thunar may leave a resident D-Bus process after login/session startup.
-# That resident process can create the first window on workspace 1 regardless
-# of the workspace rule applied to a newly-spawned client. Stop the resident
-# process first so the requested launch creates a fresh client.
-"$THUNAR" --quit >/dev/null 2>&1 || true
-sleep 0.15
-
-# Snapshot current clients.
-before=""
-if [ -n "$JQ" ]; then
-  before="$("$HYPRCTL" -j clients 2>/dev/null | "$JQ" -r '
-    .[] | select(
-      ((.class // "") | ascii_downcase | contains("thunar")) or
-      ((.initialClass // "") | ascii_downcase | contains("thunar"))
-    ) | .address
-  ' | sort -u)"
-fi
-
-# Launch on the target workspace at creation time.
-cmd="[workspace ${workspace} silent] $(printf '%q' "$THUNAR") --new-window"
-for arg in "$@"; do
-  cmd+=" $(printf '%q' "$arg")"
-done
-"$HYPRCTL" dispatch exec "$cmd" >/dev/null
-
-# Also enforce placement after creation, in case Thunar/D-Bus ignores the
-# temporary exec rule on this Hyprland build.
-if [ -n "$JQ" ]; then
-  for _ in $(seq 1 60); do
-    sleep 0.05
-    addr="$("$HYPRCTL" -j clients 2>/dev/null | "$JQ" -r '
-      [ .[] | select(
-        ((.class // "") | ascii_downcase | contains("thunar")) or
-        ((.initialClass // "") | ascii_downcase | contains("thunar"))
-      ) ] | sort_by(.focusHistoryID // 999999) | .[0].address // empty
-    ')"
-    if [ -n "$addr" ] && ! grep -Fxq "$addr" <<<"$before"; then
-      "$HYPRCTL" dispatch movetoworkspacesilent "${workspace},address:${addr}" >/dev/null 2>&1 || true
-      break
-    fi
-  done
-fi
+exec "$THUNAR" --new-window "$@"

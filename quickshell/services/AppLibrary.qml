@@ -87,9 +87,19 @@ Item {
     }
 
     root.beginLaunchFeedback(name || entry.name)
+
+    // Thunar is special-cased so the app picker launches it through a NixOS-aware
+    // helper. The helper resolves absolute paths to hyprctl/thunar and then uses
+    // Hyprland's exec dispatcher, matching the working keybind semantics.
+    var lowerId = id.toLowerCase()
+    var lowerName = String(name || entry.name || "").toLowerCase()
+    if (lowerId.indexOf("thunar") !== -1 || lowerName === "thunar") {
+      Util.execArgv(["bash", Quickshell.shellDir + "/bin/qs-launch-thunar"])
+      return
+    }
+
     // Quickshell 0.3.0 already parses the desktop Exec field correctly and
-    // exposes DesktopEntry.execute(). This avoids relying on Arch/Quickshell
-    // helpers such as uwsm-app or gtk-launch, which are not guaranteed on NixOS.
+    // exposes DesktopEntry.execute().
     entry.execute()
   }
 

@@ -4,8 +4,10 @@
   "name": "Power Controls",
   "version": "1.0.0",
   "author": "Quickshell / NixOS port",
-  "description": "Power menu button for suspend, hibernate, reboot, shutdown, and logout",
-  "kinds": ["bar-widget"],
+  "description": "Power menu button",
+  "kinds": [
+    "bar-widget"
+  ],
   "entryPoints": {
     "barWidget": "PowerControls.qml"
   },

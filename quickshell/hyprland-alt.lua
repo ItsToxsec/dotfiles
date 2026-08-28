@@ -14,4 +14,16 @@ hl.bind(qsMod .. " + " .. "N", hl.dsp.exec_cmd("qs-shell shell toggle qs.notific
 hl.bind(qsMod .. " + " .. "SHIFT" .. " + " .. "M", hl.dsp.exec_cmd("qs-system-lock"))
 
 -- Open Thunar on the workspace that is active when the shortcut is pressed.
-hl.bind(qsMod .. " + " .. "SHIFT" .. " + " .. "F", hl.dsp.exec_cmd("bash $HOME/.config/quickshell/bin/qs-thunar-current-workspace"))
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd("bash $HOME/.config/quickshell/bin/qs-thunar-current-workspace"))
+
+
+-- Thunar: clear any earlier forced-workspace assignment.
+-- Keep this rule AFTER any other Thunar window rules because Hyprland
+-- evaluates window rules top-to-bottom.
+hl.window_rule({
+    name = "thunar-use-current-workspace",
+    match = {
+        class = "(?i).*thunar.*",
+    },
+    workspace = "unset",
+})
