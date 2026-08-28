@@ -7,14 +7,18 @@ import "Model.js" as Model
 
 Panel {
   id: root
-  moduleName: "omarchy.power"
-  ipcTarget: "omarchy.power"
+  moduleName: "qs.power"
+  ipcTarget: "qs.power"
   // manageIpc: false so this panel can own the single IpcHandler the target
   // permits — needed for the togglePercentage method below.
   manageIpc: false
   property var batteryInfo: ({})
   property var systemInfo: ({})
-  property var profiles: []
+  property var profiles: [
+    { id: "power-saver", label: "Battery Saver" },
+    { id: "balanced", label: "Balanced" },
+    { id: "performance", label: "Performance" }
+  ]
   property string activeProfile: ""
   property int profileIndex: 0
   property bool cursorActive: false
@@ -106,12 +110,26 @@ Panel {
     return modeLabel()
   }
 
+  function refreshBattery() {
+    if (!batteryPresent) return
+    if (!batteryProc.running) batteryProc.running = true
+  }
+
   function refresh() {
     if (!batteryPresent) return
 
-    if (!batteryProc.running) batteryProc.running = true
+    refreshBattery()
     if (!profilesProc.running) profilesProc.running = true
     if (!systemProc.running) systemProc.running = true
+  }
+
+  Component.onCompleted: {
+    // Populate the bar immediately at login instead of waiting for the
+    // power popup to be opened for the first time. Qt.callLater lets the
+    // component finish construction before starting its helper processes.
+    Qt.callLater(function() {
+      root.refresh()
+    })
   }
 
   function updateKeyValue(raw, targetName) {
@@ -142,7 +160,7 @@ Panel {
   function setProfile(profile) {
     if (!profile || actionProc.running) return
     profileError = ""
-    actionProc.command = [Quickshell.shellDir + "/bin/omarchy-powerprofiles-set", root.discharging ? "battery" : "ac", profile]
+    actionProc.command = ["bash", Quickshell.shellDir + "/bin/qs-powerprofiles-set", root.discharging ? "battery" : "ac", profile]
     actionProc.running = true
   }
 
@@ -152,7 +170,7 @@ Panel {
   }
 
   IpcHandler {
-    target: "omarchy.power"
+    target: "qs.power"
 
     function open() { root.open() }
     function close() { root.close() }
@@ -190,13 +208,13 @@ Panel {
 
   Process {
     id: profilesProc
-    command: [Quickshell.shellDir + "/bin/omarchy-powerprofiles-list", "--active-state"]
+    command: ["bash", Quickshell.shellDir + "/bin/qs-powerprofiles-list", "--active-state"]
     stdout: StdioCollector { waitForEnd: true; onStreamFinished: root.updateProfiles(text) }
   }
 
   Process {
     id: systemProc
-    command: [Quickshell.shellDir + "/bin/omarchy-system-stats"]
+    command: ["bash", Quickshell.shellDir + "/bin/qs-system-stats"]
     stdout: StdioCollector { waitForEnd: true; onStreamFinished: root.updateKeyValue(text, "system") }
   }
 
@@ -206,6 +224,16 @@ Panel {
       if (code !== 0) profileError = "Could not set power profile"
       root.refresh()
     }
+  }
+
+  // Keep the bar battery state fresh even when the popup has never been
+  // opened. Profiles/system stats remain on the faster popup-only timer.
+  Timer {
+    interval: 15000
+    running: true
+    repeat: true
+    triggeredOnStart: true
+    onTriggered: root.refreshBattery()
   }
 
   Timer { interval: 5000; running: root.opened; repeat: true; onTriggered: root.refresh() }

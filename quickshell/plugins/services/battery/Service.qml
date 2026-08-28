@@ -6,7 +6,7 @@ Item {
   id: root
 
   property var shell: null
-  property string omarchyPath: Quickshell.shellDir
+  property string qsPath: Quickshell.shellDir
   readonly property int batteryThreshold: 10
   property string pendingPowerSource: ""
   property int percentage: -1
@@ -14,7 +14,7 @@ Item {
 
   PersistentProperties {
     id: persisted
-    reloadableId: "omarchy-battery"
+    reloadableId: Quickshell.shellDir + "/bin/qs-battery"
     property bool notifiedLowBattery: false
   }
 
@@ -35,7 +35,7 @@ Item {
     var low = discharging && percentage >= 0 && percentage <= batteryThreshold
     if (low && !persisted.notifiedLowBattery) {
       persisted.notifiedLowBattery = true
-      warningProcess.command = [omarchyPath + "/bin/omarchy-battery-low", String(percentage)]
+      warningProcess.command = [qsPath + "/bin/qs-battery-low", String(percentage)]
       warningProcess.running = true
     } else if (!low) {
       persisted.notifiedLowBattery = false

@@ -6,7 +6,7 @@ import qs.Ui
 
 BarWidget {
   id: root
-  moduleName: "omarchy.workspaces"
+  moduleName: "qs.workspaces"
 
   function workspaceById(id) {
     var values = Hyprland.workspaces.values
@@ -18,12 +18,21 @@ BarWidget {
   }
 
   function workspaceIds() {
-    var ids = [1, 2, 3, 4, 5]
+    var ids = []
     var values = Hyprland.workspaces.values
 
     for (var i = 0; i < values.length; i++) {
-      var id = values[i].id
-      if (id > 0 && id <= 10 && ids.indexOf(id) === -1) ids.push(id)
+      var workspace = values[i]
+      var id = workspace.id
+      if (id <= 0 || id > 10) continue
+
+      // Render populated workspaces, plus the currently active workspace
+      // even when it is empty.
+      var populated = workspace.toplevels && workspace.toplevels.values.length > 0
+      var active = Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.id === id
+
+      if (populated || active)
+        ids.push(id)
     }
 
     ids.sort(function(left, right) { return left - right })

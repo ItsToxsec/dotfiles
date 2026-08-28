@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "omarchy.power-controls",
+  "id": "qs.power-controls",
   "name": "Power Controls",
   "version": "1.0.0",
-  "author": "Omarchy / NixOS port",
+  "author": "Quickshell / NixOS port",
   "description": "Power menu button for suspend, hibernate, reboot, shutdown, and logout",
   "kinds": ["bar-widget"],
   "entryPoints": {

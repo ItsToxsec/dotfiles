@@ -10,7 +10,7 @@ Item {
   property real maximum: 1
   property real step: 0.05
   property bool integer: false
-  property color trackColor: bar ? Style.selectedFillFor(bar.foreground, Color.accent) : "#333"
+  property color trackColor: bar ? Style.selectedFillFor(bar.foreground, Color.accent) : Color.sliderTrack
   property color fillColor: bar ? bar.foreground : Color.foreground
   property color knobColor: bar ? bar.foreground : Color.foreground
   property bool dragging: false
@@ -86,7 +86,7 @@ Item {
     height: root.knobSize
     radius: root.knobSize / 2
     color: root.knobColor
-    borderSpec: Border.flat(root.bar ? root.bar.background : "#101315", Math.max(1, Style.space(2)))
+    borderSpec: Border.flat(root.bar ? root.bar.background : Color.background, Math.max(1, Style.space(2)))
     anchors.verticalCenter: track.verticalCenter
     x: Math.max(0, Math.min(track.width - width, track.width * root.progress - width / 2))
     scale: root._hot ? 1.15 : 1.0

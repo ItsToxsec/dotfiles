@@ -8,8 +8,8 @@ import "Model.js" as Model
 
 Panel {
   id: root
-  moduleName: "omarchy.monitor"
-  ipcTarget: "omarchy.monitor"
+  moduleName: "qs.monitor"
+  ipcTarget: "qs.monitor"
   manageIpc: false
 
   // manageIpc: false so this panel can own the single IpcHandler the target
@@ -18,6 +18,53 @@ Panel {
   property int pendingBrightnessPercent: 0
   property bool brightnessSetQueued: false
   property bool brightnessAvailable: false
+
+  property int barBrightnessPercent: -1
+Process {
+    id: barBrightnessProc
+    command: [
+      "sh", "-c",
+      "b=$(cat /sys/class/backlight/amdgpu_bl1/brightness 2>/dev/null) || exit 1; " +
+      "m=$(cat /sys/class/backlight/amdgpu_bl1/max_brightness 2>/dev/null) || exit 1; " +
+      "[ -n \"$b\" ] && [ -n \"$m\" ] && [ \"$m\" -gt 0 ] || exit 1; " +
+      "printf '%d\\n' $(( (b * 100 + m / 2) / m ))"
+    ]
+
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        var raw = String(text || "").trim()
+
+        // Important: Number("") is 0 in JavaScript, so reject empty output first.
+        if (raw === "") {
+          root.barBrightnessPercent = -1
+          return
+        }
+
+        var value = Number(raw)
+        if (isFinite(value) && value >= 0 && value <= 100) {
+          root.barBrightnessPercent = Math.round(value)
+          root.brightnessPercent = root.barBrightnessPercent
+          root.pendingBrightnessPercent = root.barBrightnessPercent
+          root.brightnessAvailable = true
+        } else {
+          root.barBrightnessPercent = -1
+        }
+      }
+    }
+  }
+
+  Timer {
+    interval: 2000
+    running: true
+    repeat: true
+    triggeredOnStart: true
+    onTriggered: {
+      if (!barBrightnessProc.running)
+        barBrightnessProc.running = true
+    }
+  }
+
   property string internalMonitor: ""
   property string externalMonitor: ""
   property string focusedMonitor: ""
@@ -50,12 +97,12 @@ Panel {
     }
     return scalePresets
   }
-  property string focusSection: "scale"
+  property string focusSection: "brightness"
   property int selectedIndex: 0
   property bool cursorActive: false
 
   // Text size slider — curated macOS-style notches (px). The panel snaps to
-  // these stops; the CLI (omarchy-display-text-size) accepts any integer in range.
+  // these stops; the CLI (qs-display-text-size) accepts any integer in range.
   readonly property var textSizeStops: [9, 10, 11, 12, 14, 16, 20]
   // While a change is in flight, the chosen stop index overrides the live
   // base-size so the knob doesn't snap back during the file round-trip. -1 =
@@ -76,7 +123,6 @@ Panel {
     var list = []
     if (brightnessAvailable) list.push("brightness")
     list.push("textsize")
-    list.push("scale")
     if (displays.length > 1) list.push("monitors")
     return list
   }
@@ -84,14 +130,13 @@ Panel {
   function sectionCount(section) {
     if (section === "brightness") return 0  // only the slider sentinel at -1
     if (section === "textsize") return 0    // slider sentinel at -1, like brightness
-    if (section === "scale") return scaleValues.length
     if (section === "monitors") return displays.length
     return 0
   }
 
   function sectionIsSingleRow(section) {
     // brightness and text size are lone sliders; scale presets sit horizontally.
-    return section === "brightness" || section === "textsize" || section === "scale"
+    return section === "brightness" || section === "textsize"
   }
 
   function sectionFirstIndex(section) {
@@ -133,7 +178,7 @@ Panel {
   // because adjustBrightness handles horizontal motion on the brightness
   // slider.
   function moveCursorH(delta) {
-    if (focusSection !== "scale") return
+    return
     var next = selectedIndex + delta
     if (next < 0) next = 0
     if (next > scaleValues.length - 1) next = scaleValues.length - 1
@@ -218,7 +263,7 @@ Panel {
   }
 
   IpcHandler {
-    target: "omarchy.monitor"
+    target: "qs.monitor"
 
     function brightness(percent: string): string { return root.brightnessIpc(percent) }
     function state(): string { return root.stateIpc() }
@@ -244,7 +289,7 @@ Panel {
     }
 
     root.brightnessSetQueued = false
-    setBrightnessProc.command = ["omarchy-brightness-display", "--no-osd", "--monitor", root.focusedMonitor, percent + "%"]
+    setBrightnessProc.command = ["bash", Quickshell.shellDir + "/bin/qs-brightness-display", "--no-osd", "--monitor", root.focusedMonitor, percent + "%"]
     setBrightnessProc.running = true
   }
 
@@ -255,7 +300,7 @@ Panel {
 
   function showBrightnessOsd(percent) {
     if (!bar || !bar.shell) return
-    bar.shell.summon("omarchy.osd", JSON.stringify({
+    bar.shell.summon("qs.osd", JSON.stringify({
       icon: "brightness",
       value: percent
     }))
@@ -305,8 +350,11 @@ Panel {
   }
 
   function setScale(scale) {
-    actionProc.command = ["bash", "-c", "omarchy-hyprland-monitor-scaling " + scale]
-    if (!actionProc.running) actionProc.running = true
+    if (scaleProc.running) return
+    var monitorName = String(root.currentMonitorName || "")
+    if (!monitorName) return
+    scaleProc.command = ["bash", Quickshell.shellDir + "/bin/qs-monitor-scale", monitorName, String(scale)]
+    scaleProc.running = true
   }
 
   // ---- Text size (shell base font + GTK text-scaling, via one CLI) ----
@@ -333,7 +381,7 @@ Panel {
   }
 
   function setTextSize(px) {
-    textScaleProc.command = ["omarchy-display-text-size", String(px)]
+    textScaleProc.command = ["bash", Quickshell.shellDir + "/bin/qs-display-text-size", String(px)]
     if (!textScaleProc.running) textScaleProc.running = true
   }
 
@@ -361,7 +409,6 @@ Panel {
         focusSection = "brightness"
         selectedIndex = -1
       } else {
-        focusSection = "scale"
         selectedIndex = 0
       }
       cursorActive = false
@@ -373,26 +420,34 @@ Panel {
   onScaleValuesChanged: clampCursor()
   onVisibleSectionsChanged: clampCursor()
 
-  // Only poll while the panel is open; the bar glyph tracks monitor count via
-  // Quickshell.screens, and open-time refresh + Component.onCompleted cover the
-  // rest. External brightness changes are reflected whenever the panel is open.
+  // Keep the bar brightness percentage current even while the panel is closed.
   Timer {
-    interval: 5000
-    running: root.opened
+    interval: 3000
+    running: true
     repeat: true
+    triggeredOnStart: true
     onTriggered: root.refresh()
   }
 
   Process {
     id: stateProc
-    command: ["omarchy-monitor-state"]
+    command: ["bash", Quickshell.shellDir + "/bin/qs-monitor-state"]
     stdout: StdioCollector {
       waitForEnd: true
       onStreamFinished: {
         var lines = String(text || "").split("\n")
         var brightness = String(lines[0] || "").trim()
-        root.brightnessAvailable = brightness !== "unavailable" && brightness !== ""
-        root.brightnessPercent = root.brightnessAvailable ? Math.max(0, Math.min(100, parseInt(brightness, 10))) : 0
+        var parsedBrightness = Number(brightness)
+
+        // Prefer the direct amdgpu_bl1-backed poll whenever it has a valid value.
+        if (root.barBrightnessPercent >= 0) {
+          root.brightnessAvailable = true
+          root.brightnessPercent = root.barBrightnessPercent
+        } else {
+          root.brightnessAvailable = brightness !== "" && isFinite(parsedBrightness) && parsedBrightness >= 0
+          if (root.brightnessAvailable)
+            root.brightnessPercent = Math.max(0, Math.min(100, Math.round(parsedBrightness)))
+        }
         root.internalMonitor = String(lines[1] || "").trim()
         root.externalMonitor = String(lines[2] || "").trim()
         root.internalEnabled = String(lines[3] || "").trim() !== ""
@@ -416,7 +471,7 @@ Panel {
     stdout: StdioCollector { waitForEnd: true }
     // Do NOT call refresh() after a brightness set completes. The local
     // brightnessPercent we just wrote is authoritative; re-reading via
-    // `omarchy-brightness-display` races the hardware/driver and can
+    // `qs-brightness-display` races the hardware/driver and can
     // return an empty string, which the parser then coerces to 0 —
     // visible as a "bounce to zero" after h/l keypresses. External
     // brightness changes are still picked up by the 5s periodic refresh,
@@ -469,7 +524,7 @@ Panel {
     id: button
     anchors.fill: parent
     bar: root.bar
-    text: Quickshell.screens.length > 1 ? "󰍺" : "󰍹"
+    text: "󰍹"
     onPressed: function(b) { root.toggle() }
     onWheelMoved: function(delta) {
       if (!root.brightnessAvailable) return
@@ -520,6 +575,27 @@ Panel {
         }
 
         Column {
+
+    Row {
+      spacing: 8
+      visible: root.barBrightnessPercent >= 0
+
+      Text {
+        text: "󰃠"
+        color: Color.foreground
+        font.family: "CaskaydiaCove Nerd Font Mono"
+        font.pixelSize: 14
+        anchors.verticalCenter: parent.verticalCenter
+      }
+
+      Text {
+        text: "Brightness: " + (root.barBrightnessPercent >= 0 ? root.barBrightnessPercent + "%" : "--")
+        color: Color.foreground
+        font.family: "CaskaydiaCove Nerd Font Mono"
+        font.pixelSize: 14
+        anchors.verticalCenter: parent.verticalCenter
+      }
+    }
           id: panelColumn
           width: scrollArea.availableWidth
           spacing: Style.space(14)
@@ -560,10 +636,9 @@ Panel {
               Text {
                 id: heroLabel
                 text: {
-                  if (root.brightnessAvailable) {
-                    return root.brightnessName(brightnessSlider.dragging ? brightnessSlider.liveValue : root.brightnessPercent).toUpperCase()
-                  }
-                  return "FIXED BRIGHTNESS"
+                  return root.barBrightnessPercent >= 0
+                    ? "BRIGHTNESS " + root.barBrightnessPercent + "%"
+                    : "BRIGHTNESS --"
                 }
                 color: Qt.darker(root.bar.foreground, 1.4)
                 font.family: root.bar.fontFamily
@@ -578,12 +653,12 @@ Panel {
 
           // ---------- Brightness ----------
           PanelSeparator {
-            visible: root.brightnessAvailable
+            visible: root.brightnessAvailable || root.barBrightnessPercent >= 0
             foreground: root.bar.foreground
           }
 
           Column {
-            visible: root.brightnessAvailable
+            visible: root.brightnessAvailable || root.barBrightnessPercent >= 0
             width: parent.width
             spacing: Style.space(6)
 
@@ -602,7 +677,7 @@ Panel {
 
               Text {
                 id: brightnessPercent
-                text: Math.round(brightnessSlider.dragging ? brightnessSlider.liveValue : root.brightnessPercent) + "%"
+                text: brightnessSlider.dragging ? Math.round(brightnessSlider.liveValue) + "%" : (root.barBrightnessPercent >= 0 ? root.barBrightnessPercent + "%" : "--")
                 color: Qt.darker(root.bar.foreground, 1.4)
                 font.family: root.bar.fontFamily
                 font.pixelSize: Style.font.caption
@@ -631,7 +706,7 @@ Panel {
                 minimum: 1
                 maximum: 100
                 step: 1
-                value: root.brightnessPercent
+                value: root.barBrightnessPercent >= 0 ? root.barBrightnessPercent : root.brightnessPercent
                 integer: true
                 onMoved: function(v) { root.previewBrightness(v) }
                 onReleased: function(v) {
@@ -721,70 +796,6 @@ Panel {
             }
           }
 
-          // ---------- Scale ----------
-          PanelSeparator {
-            foreground: root.bar.foreground
-          }
-
-          Column {
-            width: parent.width
-            spacing: Style.space(10)
-
-            Item {
-              width: parent.width
-              implicitHeight: Math.max(scaleHeader.implicitHeight, scaleMonitor.implicitHeight)
-
-              PanelSectionHeader {
-                id: scaleHeader
-                text: "SCALE"
-                foreground: root.bar.foreground
-                fontFamily: root.bar.fontFamily
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-              }
-
-              // Name the monitor SCALE targets, since it only applies to the
-              // focused one.
-              Text {
-                id: scaleMonitor
-                text: root.focusedMonitor
-                // Only worth naming when more than one display is in play.
-                visible: root.focusedMonitor !== "" && root.enabledDisplayCount > 1
-                color: Qt.darker(root.bar.foreground, 1.4)
-                font.family: root.bar.fontFamily
-                font.pixelSize: Style.font.caption
-                font.bold: true
-                anchors.right: parent.right
-                anchors.rightMargin: Style.space(6)
-                anchors.verticalCenter: parent.verticalCenter
-              }
-            }
-
-            Grid {
-              id: scaleRow
-              width: parent.width
-              columns: root.scaleValues.length
-              spacing: Style.spacing.xs
-
-              readonly property real cellWidth: root.scaleValues.length > 0
-                ? (width - spacing * (columns - 1)) / columns
-                : 0
-
-              Repeater {
-                model: root.scaleValues
-
-                ScalePill {
-                  required property string modelData
-                  required property int index
-
-                  scaleValue: modelData
-                  scaleIndex: index
-                  width: scaleRow.cellWidth
-                }
-              }
-            }
-          }
-
           // ---------- Monitors ----------
           PanelSeparator {
             visible: root.displays.length > 1
@@ -822,31 +833,6 @@ Panel {
           }
         }
       }
-    }
-  }
-
-  component ScalePill: Button {
-    id: pill
-    required property string scaleValue
-    required property int scaleIndex
-
-    text: root.effectiveScale(scaleValue) + "x"
-    fontSize: Style.font.caption
-    foreground: root.bar.foreground
-    fontFamily: root.bar.fontFamily
-    horizontalPadding: Style.spacing.sm
-    verticalPadding: Style.spacing.controlPaddingY
-    bordered: true
-
-    active: root.activeScaleIndex() === scaleIndex
-    hasCursor: root.cursorActive && root.focusSection === "scale" && root.selectedIndex === scaleIndex
-
-    onClicked: root.setScale(scaleValue)
-    onHovered: function(isHovered) {
-      if (!isHovered || root.reflowingText) return
-      root.cursorActive = true
-      root.focusSection = "scale"
-      root.selectedIndex = pill.scaleIndex
     }
   }
 
@@ -919,4 +905,15 @@ Panel {
       onClicked: if (monitorRow.canToggle) root.toggleDisplay(monitorRow.display.name, monitorRow.display.enabled)
     }
   }
+
+  Process {
+    id: scaleProc
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        if (root.refresh) root.refresh()
+      }
+    }
+  }
+
 }

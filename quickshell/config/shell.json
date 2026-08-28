@@ -5,38 +5,55 @@
     "lock": 600
   },
   "bar": {
-    "id": "omarchy.bar",
+    "id": "qs.bar",
     "position": "top",
-    "transparent": false,
-    "centerAnchor": "omarchy.clock",
+    "transparent": true,
+    "centerAnchor": "qs.clock",
     "layout": {
       "left": [
         {
-          "id": "omarchy.menu"
+          "id": "qs.menu"
         },
         {
-          "id": "omarchy.workspaces"
+          "id": "qs.workspaces"
         }
       ],
       "center": [
         {
-          "id": "omarchy.clock",
-          "format": "dddd HH:mm"
+          "id": "qs.clock"
         }
       ],
       "right": [
         {
-          "id": "omarchy.audio"
+          "id": "qs.audio"
         },
         {
-          "id": "omarchy.network"
+          "id": "qs.network"
         },
         {
-          "id": "omarchy.power",
+          "id": "qs.cpu"
+        },
+        {
+          "id": "qs.gpu-temp"
+        },
+        {
+          "id": "qs.gpu-usage"
+        },
+        {
+          "id": "qs.memory"
+        },
+        {
+          "id": "qs.temperature"
+        },
+        {
+          "id": "qs.monitor"
+        },
+        {
+          "id": "qs.power",
           "showPercentage": true
         },
         {
-          "id": "omarchy.power-controls"
+          "id": "qs.power-controls"
         }
       ]
     }

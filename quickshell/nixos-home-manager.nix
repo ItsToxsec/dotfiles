@@ -13,6 +13,6 @@
   ];
 
   wayland.windowManager.hyprland.settings.exec-once = [
-    "${pkgs.bash}/bin/bash -lc '$HOME/.config/quickshell/omarchy/launch.sh'"
+    "${pkgs.bash}/bin/bash -lc '$HOME/.config/quickshell/qs/launch.sh'"
   ];
 }

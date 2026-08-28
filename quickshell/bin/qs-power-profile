@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+find_ppctl() {
+  for p in \
+    /run/current-system/sw/bin/powerprofilesctl \
+    /nix/var/nix/profiles/system/sw/bin/powerprofilesctl \
+    "/etc/profiles/per-user/${USER}/bin/powerprofilesctl" \
+    "${HOME}/.nix-profile/bin/powerprofilesctl"
+  do
+    if [ -x "$p" ]; then
+      printf '%s\n' "$p"
+      return 0
+    fi
+  done
+
+  command -v powerprofilesctl 2>/dev/null || return 1
+}
+
+PPCTL="$(find_ppctl || true)"
+if [ -z "$PPCTL" ]; then
+  echo "powerprofilesctl unavailable" >&2
+  exit 1
+fi
+
+case "${1:-get}" in
+  get)
+    "$PPCTL" get
+    ;;
+  list)
+    printf '%s\n' power-saver balanced performance
+    ;;
+  set)
+    case "${2:-}" in
+      power-saver|balanced|performance)
+        "$PPCTL" set "$2"
+        ;;
+      *)
+        echo "unsupported profile: ${2:-}" >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  power-saver|balanced|performance)
+    "$PPCTL" set "$1"
+    ;;
+  *)
+    echo "usage: $0 [get|list|set PROFILE|power-saver|balanced|performance]" >&2
+    exit 2
+    ;;
+esac

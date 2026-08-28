@@ -14,13 +14,28 @@ QtObject {
 
   readonly property string home: Quickshell.env("HOME")
   readonly property string stateHome: home + "/.local/state"
-  readonly property string currentThemePath: stateHome + "/omarchy/current/theme"
+  readonly property string currentThemePath: stateHome + "/qs/current/theme"
 
-  property color foreground: "#cacccc"
-  property color background: "#101315"
-  property color accent: "#cacccc"
-  property color urgent: "#a55555"
-  property color muted: "#707880"
+  property color foreground: MasterColors.foreground
+  property color background: MasterColors.background
+  property color accent: MasterColors.accent
+  property color urgent: MasterColors.urgent
+  property color muted: MasterColors.muted
+
+  // Shared semantic colors sourced from the one master palette.
+  readonly property color surface: MasterColors.surface
+  readonly property color onScrim: MasterColors.onScrim
+  readonly property color onScrimDim: MasterColors.onScrimDim
+  readonly property color onScrimUrgent: MasterColors.onScrimUrgent
+  readonly property color scrimHeavy: MasterColors.scrimHeavy
+  readonly property color overlayTrack: MasterColors.overlayTrack
+  readonly property color overlayMinorTick: MasterColors.overlayMinorTick
+  readonly property color overlayMajorTick: MasterColors.overlayMajorTick
+  readonly property color qrDark: MasterColors.qrDark
+  readonly property color success: MasterColors.success
+  readonly property color debugBounds: MasterColors.debugBounds
+  readonly property color debugOuterBounds: MasterColors.debugOuterBounds
+  readonly property color sliderTrack: MasterColors.sliderTrack
 
   // Flat dictionary of "section.key" -> raw string from shell.toml.
   // Reassigning this whole property is what makes surface bindings below
@@ -199,7 +214,7 @@ QtObject {
   }
 
   // Re-derive `shellValues` from theme base + user override and push it to
-  // Style. User keys win, so a machine-level `~/.config/omarchy/shell.toml`
+  // Style. User keys win, so a machine-level `~/.config/qs/shell.toml`
   // survives theme switches (which replace only themeShellValues).
   function mergeShell() {
     var merged = {}
@@ -237,11 +252,11 @@ QtObject {
     onLoadFailed: root.loadShell("")
   }
   // Machine-level override, layered on top of whatever theme is active. This
-  // is where `omarchy display text size` writes `[font] base-size`. Watched so the
+  // is where `qs display text size` writes `[font] base-size`. Watched so the
   // CLI takes effect live without restarting the shell; absent by default.
   property FileView userShellFile: FileView {
     id: userShellFile
-    path: root.home + "/.config/omarchy/shell.toml"
+    path: root.home + "/.config/qs/shell.toml"
     watchChanges: true
     printErrors: false
     onLoaded: root.loadUserShell(text())

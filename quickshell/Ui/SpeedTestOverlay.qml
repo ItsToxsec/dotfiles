@@ -21,7 +21,7 @@ PanelWindow {
   required property string rightLabel
   property string unit: "Mbps"
   property string title: ""
-  property string layerNamespace: "omarchy-speed-test"
+  property string layerNamespace: Quickshell.shellDir + "/bin/qs-speed-test"
   property string runAgainTooltip: "Measure again"
   property real leftValue: 0
   property real rightValue: 0
@@ -66,9 +66,9 @@ PanelWindow {
 
   // The scrim below is a fixed near-black regardless of theme, so text and
   // ticks on it need a fixed light palette, not the themed bar.foreground.
-  readonly property color onScrim: "white"
-  readonly property color onScrimDim: Qt.rgba(1, 1, 1, 0.55)
-  readonly property color onScrimUrgent: "#ff6b6b"
+  readonly property color onScrim: Color.onScrim
+  readonly property color onScrimDim: Color.onScrimDim
+  readonly property color onScrimUrgent: Color.onScrimUrgent
 
   visible: open
   // The window is instantiated hidden, so re-acquire focus after mapping and
@@ -93,7 +93,7 @@ PanelWindow {
   // panel behind a real cluster.
   Rectangle {
     anchors.fill: parent
-    color: Qt.rgba(0, 0, 0, 0.78)
+    color: Color.scrimHeavy
 
     MouseArea {
       anchors.fill: parent
@@ -215,9 +215,9 @@ PanelWindow {
     readonly property int tickCount: 46
     readonly property real arcWidth: Style.space(4)
     readonly property real arcRadius: diameter / 2 - arcWidth
-    readonly property color trackColor: Qt.rgba(1, 1, 1, 0.14)
-    readonly property color minorTickColor: Qt.rgba(1, 1, 1, 0.12)
-    readonly property color majorTickColor: Qt.rgba(1, 1, 1, 0.3)
+    readonly property color trackColor: Color.overlayTrack
+    readonly property color minorTickColor: Color.overlayMinorTick
+    readonly property color majorTickColor: Color.overlayMajorTick
     // The dial that isn't measuring yet sits dimmed until it gets a figure.
     readonly property bool engaged: live || value > 0
 

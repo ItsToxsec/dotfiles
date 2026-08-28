@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# NixOS compatibility shim for the Omarchy shell.
-exec "$(dirname "$0")/omarchy-nixos" unsupported "$@"

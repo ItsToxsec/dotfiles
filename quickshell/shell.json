@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "idle": {
+    "screensaver": 300,
+    "lock": 600
+  },
+  "bar": {
+    "id": "qs.bar",
+    "position": "top",
+    "transparent": true,
+    "centerAnchor": "qs.clock",
+    "layout": {
+      "left": [
+        {
+          "id": "qs.menu"
+        },
+        {
+          "id": "qs.workspaces"
+        }
+      ],
+      "center": [
+        {
+          "id": "qs.clock"
+        }
+      ],
+      "right": [
+        {
+          "id": "qs.audio"
+        },
+        {
+          "id": "qs.network"
+        },
+        {
+          "id": "qs.cpu"
+        },
+        {
+          "id": "qs.gpu-temp"
+        },
+        {
+          "id": "qs.gpu-usage"
+        },
+        {
+          "id": "qs.memory"
+        },
+        {
+          "id": "qs.temperature"
+        },
+        {
+          "id": "qs.monitor"
+        },
+        {
+          "id": "qs.power",
+          "showPercentage": true
+        }
+      ]
+    }
+  },
+  "plugins": []
+}

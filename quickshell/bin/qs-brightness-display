@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+find_backlight() {
+  if [[ -d /sys/class/backlight/amdgpu_bl1 ]] \
+     && [[ -r /sys/class/backlight/amdgpu_bl1/brightness ]] \
+     && [[ -r /sys/class/backlight/amdgpu_bl1/max_brightness ]]; then
+    printf '%s
+' "/sys/class/backlight/amdgpu_bl1"
+    return 0
+  fi
+
+  for d in /sys/class/backlight/*; do
+    [[ -d "$d" ]] || continue
+    [[ -r "$d/brightness" && -r "$d/max_brightness" ]] || continue
+    printf '%s
+' "$d"
+    return 0
+  done
+  return 1
+}
+
+read_percent() {
+  local d b m
+  d="$(find_backlight)" || return 1
+  b="$(cat "$d/brightness" 2>/dev/null)" || return 1
+  m="$(cat "$d/max_brightness" 2>/dev/null)" || return 1
+  [[ "$m" =~ ^[0-9]+$ && "$b" =~ ^[0-9]+$ && "$m" -gt 0 ]] || return 1
+  printf '%d\n' "$(( (b * 100 + m / 2) / m ))"
+}
+
+set_percent() {
+  local pct="$1"
+  pct="${pct%%%}"
+  [[ "$pct" =~ ^[0-9]+$ ]] || return 1
+  (( pct < 1 )) && pct=1
+  (( pct > 100 )) && pct=100
+
+  if command -v brightnessctl >/dev/null 2>&1; then
+    brightnessctl -q set "${pct}%"
+    return
+  fi
+
+  local d m raw
+  d="$(find_backlight)" || return 1
+  m="$(cat "$d/max_brightness")"
+  raw="$(( (m * pct + 50) / 100 ))"
+  (( raw < 1 )) && raw=1
+  printf '%s\n' "$raw" > "$d/brightness"
+}
+
+# Preserve lock-screen DPMS calls.
+case "${1:-}" in
+  off)
+    command -v hyprctl >/dev/null 2>&1 && hyprctl dispatch dpms off >/dev/null 2>&1 || true
+    exit 0
+    ;;
+  on)
+    command -v hyprctl >/dev/null 2>&1 && hyprctl dispatch dpms on >/dev/null 2>&1 || true
+    exit 0
+    ;;
+esac
+
+# Omarchy monitor panel calls:
+# qs-brightness-display --no-osd --monitor <name> 50%
+target=""
+while (($#)); do
+  case "$1" in
+    --no-osd) shift ;;
+    --monitor) shift; [[ $# -gt 0 ]] && shift ;;
+    *%) target="$1"; shift ;;
+    *) shift ;;
+  esac
+done
+
+if [[ -n "$target" ]]; then
+  set_percent "$target"
+  read_percent
+else
+  read_percent
+fi

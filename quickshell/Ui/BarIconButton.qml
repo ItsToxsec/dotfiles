@@ -8,7 +8,7 @@ WidgetButton {
   property Component iconComponent: null
   property real slotSize: Style.bar.iconSlot
   property real opticalSize: Style.bar.iconCanvas
-  property bool debugOpticalBounds: Quickshell.env("OMARCHY_DEBUG_BAR_ICONS") === "1"
+  property bool debugOpticalBounds: Quickshell.env("QUICKSHELL_DEBUG_BAR_ICONS") === "1"
   readonly property real opticalCenterErrorX: glyph.visible ? glyph.paintedCenterX - opticalCanvas.width / 2 : 0
   readonly property real glyphPaintedWidth: glyph.visible ? glyph.tightWidth : 0
   readonly property real glyphBaselineY: glyph.visible ? glyph.baselineY : 0
@@ -49,7 +49,7 @@ WidgetButton {
       anchors.fill: parent
       color: "transparent"
       border.width: 1
-      border.color: "#4488ff"
+      border.color: Color.debugBounds
     }
   }
 
@@ -58,6 +58,6 @@ WidgetButton {
     anchors.fill: parent
     color: "transparent"
     border.width: 1
-    border.color: "#ff4455"
+    border.color: Color.debugOuterBounds
   }
 }

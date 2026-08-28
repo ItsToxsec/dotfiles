@@ -6,7 +6,7 @@ import qs.Ui
 
 BarWidget {
   id: root
-  moduleName: "omarchy.system-update"
+  moduleName: "qs.system-update"
 
   property bool updateAvailable: false
 
@@ -17,7 +17,7 @@ BarWidget {
   function clear() { updateAvailable = false }
 
   function runUpdate() {
-    if (root.bar) root.bar.run("omarchy-launch-floating-terminal-with-presentation omarchy-update")
+    if (root.bar) root.bar.run("qs-launch-floating-terminal-with-presentation qs-update")
   }
 
   visible: updateAvailable
@@ -25,7 +25,7 @@ BarWidget {
   implicitHeight: button.implicitHeight
 
   IpcHandler {
-    target: "omarchy.system-update"
+    target: "qs.system-update"
 
     function refresh(): void {
       root.broadcast("refresh")
@@ -38,7 +38,7 @@ BarWidget {
 
   Process {
     id: updateProc
-    command: ["omarchy-update-available"]
+    command: ["bash", Quickshell.shellDir + "/bin/qs-update-available"]
     onExited: function(exitCode) {
       root.updateAvailable = exitCode === 0
     }
@@ -59,7 +59,7 @@ BarWidget {
     text: "\uf021"
     slotSize: Style.bar.statusSlot
     fontSize: Style.font.caption
-    tooltipText: "Pending Omarchy Updates"
+    tooltipText: "Pending Quickshell Updates"
     onPressed: root.runUpdate()
   }
 }

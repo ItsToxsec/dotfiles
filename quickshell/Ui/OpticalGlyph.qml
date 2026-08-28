@@ -41,7 +41,7 @@ Item {
     anchors.fill: parent
     color: "transparent"
     border.width: 1
-    border.color: "#4488ff"
+    border.color: Color.debugBounds
   }
 
   Rectangle {
@@ -50,6 +50,6 @@ Item {
     y: Math.round(root.baselineY)
     width: parent.width
     height: 1
-    color: "#44ff88"
+    color: Color.success
   }
 }

@@ -6,16 +6,16 @@ import qs.Ui
 
 BarWidget {
   id: root
-  moduleName: "omarchy.power-controls"
+  moduleName: "qs.power-controls"
 
   implicitWidth: button.implicitWidth
   implicitHeight: button.implicitHeight
 
   function openPowerMenu() {
-    // Open the existing Omarchy system menu through the running shell.
+    // Open the existing Quickshell system menu through the running shell.
     // This keeps all power actions in one place and avoids spawning another
     // Quickshell process.
-    Util.execArgv(["qs", "ipc", "call", "shell", "toggle", "omarchy.menu", '{"menu":"system"}'])
+    Util.execArgv(["qs", "ipc", "call", "shell", "toggle", "qs.menu", '{"menu":"system"}'])
   }
 
   BarIconButton {

@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+resolve_bin() {
+  local name="$1" p
+  for p in \
+    "/run/current-system/sw/bin/$name" \
+    "/nix/var/nix/profiles/system/sw/bin/$name" \
+    "/etc/profiles/per-user/${USER:-}/bin/$name" \
+    "$HOME/.nix-profile/bin/$name"
+  do
+    if [ -x "$p" ]; then
+      printf '%s\n' "$p"
+      return 0
+    fi
+  done
+  command -v "$name" 2>/dev/null || return 1
+}
+
+PP="$(resolve_bin powerprofilesctl)"
+profile="${!#:-}"
+
+case "$profile" in
+  power-saver|balanced|performance) ;;
+  *)
+    echo "unsupported power profile: $profile" >&2
+    exit 2
+    ;;
+esac
+
+exec "$PP" set "$profile"

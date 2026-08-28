@@ -196,13 +196,15 @@ hl.bind(mainMod .. " + " .. "X", hl.dsp.exec_cmd("wlogout"))
 
 hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. "F", hl.dsp.exec_cmd("thunar"))
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. "M", hl.dsp.exec_cmd("swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --fade-in 0.2"))
-
 hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. "SPACE", hl.dsp.window.float())
 
 -- hl.bind(mainMod .. " + " .. "D", hl.dsp.exec_cmd("wofi --show drun"))
-hl.bind("ALT + D", hl.dsp.exec_cmd(
-    "qs ipc call shell toggle omarchy.menu '{\"menu\":\"root\"}'"
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(
+    "qs ipc call shell toggle qs.menu '{\"menu\":\"root\"}'"
+))
+
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd(
+    "bash $HOME/.config/quickshell/bin/qs-system-lock"
 ))
 
 hl.bind(mainMod .. " + " .. "RETURN", hl.dsp.exec_cmd("terminator"))
@@ -521,24 +523,18 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("hypridle >> ~/hypridle.log")
     hl.exec_cmd("brave")
     hl.exec_cmd("hyprpaper")
-    --hl.exec_cmd("qs")
+    hl.exec_cmd("qs")
 end)
 
 -- Exec (run every reload)
 hl.on("config.reloaded", function()
     hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme Adwaita")
     hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme prefer-dark")
-    hl.exec_cmd("pkill waybar; waybar")
     hl.exec_cmd("hyprshade auto")
 end)
 
--- Omarchy Quattro shortcut adapter for the user's Hyprland Lua config.
--- Omarchy's SUPER modifier is intentionally replaced with LEFT ALT.
--- Add these binds to your existing hyprland.lua after resolving any collisions.
-
-hl.bind(altMod .. " + " .. "SPACE", hl.dsp.exec_cmd("omarchy-shell shell toggle omarchy.menu '{\"menu\":\"root\"}'"))
-hl.bind(mainMod .. " + " .. "V", hl.dsp.exec_cmd("omarchy-shell shell toggle omarchy.clipboard"))
-hl.bind(mainMod .. " + " .. "N", hl.dsp.exec_cmd("omarchy-shell shell toggle omarchy.notifications"))
+hl.bind(mainMod .. " + " .. "V", hl.dsp.exec_cmd("qs-shell shell toggle qs.clipboard"))
+hl.bind(mainMod .. " + " .. "N", hl.dsp.exec_cmd("qs-shell shell toggle qs.notifications"))
 
 -- Workspace navigation remains with your existing ALT+number bindings.
 -- Do not duplicate your existing ALT bindings; merge these selectively.

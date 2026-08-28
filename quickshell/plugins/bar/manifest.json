@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "omarchy.bar",
+  "id": "qs.bar",
   "name": "Bar",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Quickshell",
   "description": "Status bar with widgets",
   "kinds": [
     "bar"
