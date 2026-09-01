@@ -46,6 +46,7 @@
         clc = "clear";
         update = "sudo nixos-rebuild switch";
         channel-update = "sudo nix-channel --update";
+        nshell = ''f() { nix-shell "$HOME/dotfiles/nix-configs/Universal/shells/$1.nix"; }; f'';
       };
       ohMyZsh = {
         enable = true;
@@ -100,4 +101,14 @@
   
   # Power profiles
   services.power-profiles-daemon.enable = true;
+
+
+  imports = [ ./mouseless.nix ];
+
+  programs.mouseless = {
+    enable = true;
+    users = [ "itstoxsec" ];
+  };
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

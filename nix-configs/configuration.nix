@@ -18,6 +18,7 @@ in
       ./Universal/apps.nix
       ./Universal/docker.nix
       ./Universal/hyprland.nix
+      ./Universal/mouseless.nix
       ./Universal/setup.nix
       ./Universal/sddm.nix
       ./Universal/wireshark.nix

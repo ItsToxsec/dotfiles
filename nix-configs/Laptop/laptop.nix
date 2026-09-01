@@ -6,6 +6,8 @@
     lidSwitchDocked = "suspend";
     lidSwitch = "suspend";
   };
+  
+  services.logind.lidSwitch = "suspend"; # Options: "suspend", "ignore", "poweroff", "hibernate", etc.
 
   services.libinput = {
     enable = true;
