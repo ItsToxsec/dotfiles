@@ -5,8 +5,8 @@ pkgs.mkShell {
     nodejs
     pnpm
     yarn
-    nodePackages.typescript
-    nodePackages.typescript-language-server
+    typescript
+    typescript-language-server
     git
   ];
 
