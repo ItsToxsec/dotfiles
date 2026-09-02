@@ -1,13 +1,23 @@
 { inputs, config, pkgs, ... }:
 
 {
-  # logind settings
   services.logind.settings.Login = {
-    lidSwitchDocked = "suspend";
-    lidSwitch = "suspend";
+    # On battery / undocked:
+    # suspend immediately, then hibernate after 5 minutes
+    HandleLidSwitch = "suspend-then-hibernate";
+
+    # While charging:
+    HandleLidSwitchExternalPower = "suspend-then-hibernate";
+
+    # While docked:
+    HandleLidSwitchDocked = "suspend-then-hibernate";
+  };
+
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "5min";
   };
   
-  services.logind.lidSwitch = "suspend"; # Options: "suspend", "ignore", "poweroff", "hibernate", etc.
+  #services.logind.lidSwitch = "suspend"; # Options: "suspend", "ignore", "poweroff", "hibernate", etc.
 
   services.libinput = {
     enable = true;
