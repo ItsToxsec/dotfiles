@@ -45,42 +45,22 @@ hl.monitor({
     transform = 2,
 })
 
--- See https://wiki.hyprland.org/Configuring/Keywords/ for more
+-- Laptop lid display handling
+hl.bind(
+    "switch:on:Lid Switch",
+    hl.dsp.exec_cmd(
+        "bash $HOME/.config/hypr/scripts/lid-display.sh close"
+    ),
+    { locked = true }
+)
 
--- Execute your favorite apps at launch
-
--- exec-once = waybar & hyprpaper & firefox
-
---exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
-
-
-
--- for GTK3 apps
-
-
--- for GTK4 apps
-
---exec-once = waybar
-
-
-
-
--- Auto start Apps
-
-
---exec-once = vivaldi
-
--- Hyprshade
-
-
--- screen timeout
-
--- Source a file (multi-file configs)
-
--- source = ~/.config/hypr/myColors.conf
-
--- Some default env vars.
+hl.bind(
+    "switch:off:Lid Switch",
+    hl.dsp.exec_cmd(
+        "bash $HOME/.config/hypr/scripts/lid-display.sh open"
+    ),
+    { locked = true }
+)
 
 hl.env("XCURSOR_SIZE", 14)
 
