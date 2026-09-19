@@ -8,4 +8,5 @@
       ./Laptop/hibernate.nix
       ./Laptop/laptop-settings.nix
     ];
+    networking.hostName = "nixosLaptop"; # Define your hostname.
 }

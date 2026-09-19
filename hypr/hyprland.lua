@@ -6,65 +6,30 @@
 
 ---@module 'hl'
 
--- See https://wiki.hyprland.org/Configuring/Monitors/
+local handle = io.popen("hostname")
+local hostname = handle:read("*a"):gsub("%s+", "")
+handle:close()
 
-hl.monitor({
-    output   = "",
-    mode     = "highres",
-    position = "auto",
-    scale    = 1.0,
-})
+if hostname == "nixosLaptop" then
+    dofile(os.getenv("HOME") .. "/.config/hypr/monitors/laptop.lua")
 
-hl.monitor({
-    output   = "eDP-1",
-    mode     = "highres",
-    position = "auto",
-    scale    = 1.33,
-})
+elseif hostname == "nixosPC" then
+    dofile(os.getenv("HOME") .. "/.config/hypr/monitors/desktop.lua")
 
-hl.monitor({
-    output   = "DP-1",
-    mode     = "3440x1440@240",
-    position = "0x0",
-    scale    = 1.0,
-})
+--elseif hostname == "work-laptop" then
+--    dofile(os.getenv("HOME") .. "/.config/hypr/monitors/work-laptop.lua")
 
-hl.monitor({
-    output   = "DP-2",
-    mode     = "1920x1080",
-    position = "3440x-1080",
-    scale    = 1.000,
-    transform = 3,
-})
-
-hl.monitor({
-    output   = "DP-3",
-    mode     = "2560x1080",
-    position = "880x-1080",
-    scale    = 1.00,
-    transform = 2,
-})
-
--- Laptop lid display handling
-hl.bind(
-    "switch:on:Lid Switch",
-    hl.dsp.exec_cmd(
-        "bash $HOME/.config/hypr/scripts/lid-display.sh close"
-    ),
-    { locked = true }
-)
-
-hl.bind(
-    "switch:off:Lid Switch",
-    hl.dsp.exec_cmd(
-        "bash $HOME/.config/hypr/scripts/lid-display.sh open"
-    ),
-    { locked = true }
-)
+else
+    -- Safe fallback
+    hl.monitor({
+        output = "",
+        mode = "highres",
+        position = "auto",
+        scale = 1.0,
+    })
+end
 
 hl.env("XCURSOR_SIZE", 14)
-
--- For all categories, see https://wiki.hyprland.org/Configuring/Variables/
 
 hl.config({
     input = {

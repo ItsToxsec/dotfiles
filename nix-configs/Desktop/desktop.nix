@@ -13,4 +13,5 @@
       ./windows.nix
       ./wol.nix
     ];
+    networking.hostName = "nixosPC"; # Define your hostname.
 }
