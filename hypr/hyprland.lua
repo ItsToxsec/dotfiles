@@ -106,7 +106,7 @@ hl.config({
 hl.config({
     decoration = {
         -- See https://wiki.hyprland.org/Configuring/Variables/ for more
-        rounding = 10,
+        rounding = 5,
         --    blur = yes
         --    blur_size = 3
         --    blur_passes = 1

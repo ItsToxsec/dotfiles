@@ -9,7 +9,7 @@ import QtQuick
 QtObject {
   // Core shell palette
   readonly property color foreground: "#0076ed"
-  readonly property color background: "#323232"
+  readonly property color background: "#000000"
   readonly property color surface: "#3f3f3f"
   readonly property color accent: "#0076ed"
   readonly property color urgent: "#eb4d4b"

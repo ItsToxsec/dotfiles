@@ -25,6 +25,7 @@ environment.systemPackages = with pkgs; [
     discord
     distrobox
     docker
+    dos2unix
     dxvk
     ethtool
     fastfetch 
@@ -105,6 +106,7 @@ environment.systemPackages = with pkgs; [
     python313Packages.pip
     python313Packages.west
     qemu_kvm
+    qmk
     unstable.quickshell
     retroarch
     rofi
@@ -148,6 +150,7 @@ environment.systemPackages = with pkgs; [
     #xfwm4
     xwayland
     zed-editor
+    zip
     #zoom-us
     zsh
     pkgsCross.avr.buildPackages.gcc
