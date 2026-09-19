@@ -44,7 +44,8 @@
         vim = "nvim";
         ll = "ls -la";
         clc = "clear";
-        update = "sudo nixos-rebuild switch";
+        dupdate = "sudo nixos-rebuild switch -I nixos-config=/home/$USER/dotfiles/nix-configs/Desktop/desktop.nix";
+        lupdate = "sudo nixos-rebuild switch -I nixos-config=/home/$USER/dotfiles/nix-configs/Laptop/laptop.nix";
         channel-update = "sudo nix-channel --update";
         nshell = ''f() { nix-shell "$HOME/dotfiles/nix-configs/Universal/shells/$1.nix"; }; f'';
       };

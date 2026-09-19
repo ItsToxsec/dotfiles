@@ -12,21 +12,17 @@ in
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+    [
       ./Universal/amd.nix
       ./Universal/apps.nix
       ./Universal/docker.nix
       ./Universal/hyprland.nix
       ./Universal/mouseless.nix
-#./Universal/power.nix
+      #./Universal/power.nix
       ./Universal/setup.nix
       ./Universal/sddm.nix
       ./Universal/wireshark.nix
       #./Universal/affinity.nix
-#./Laptop/apps.nix
-#./Laptop/hibernate.nix
-#./Laptop/laptop.nix
     ];
 
   # Bootloader.
