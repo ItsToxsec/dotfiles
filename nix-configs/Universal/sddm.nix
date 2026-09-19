@@ -5,7 +5,7 @@
     enable = true;
 
     wayland = {
-      enable = true;
+      enable = false;
     };
 
     enableHidpi = true;

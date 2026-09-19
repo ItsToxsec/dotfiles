@@ -5,7 +5,7 @@
     enable = true;
     settings = rec {
       initial_session = {
-        command = "hyprland";
+        command = "start-hyprland";
         user = "itstoxsec";
       };
       default_session = initial_session;

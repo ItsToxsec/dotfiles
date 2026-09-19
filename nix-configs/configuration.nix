@@ -19,21 +19,21 @@ in
       ./Universal/docker.nix
       ./Universal/hyprland.nix
       ./Universal/mouseless.nix
-      ./Universal/power.nix
+#./Universal/power.nix
       ./Universal/setup.nix
       ./Universal/sddm.nix
       ./Universal/wireshark.nix
       #./Universal/affinity.nix
-      ./Laptop/apps.nix
-      ./Laptop/hibernate.nix
-      ./Laptop/laptop.nix
+#./Laptop/apps.nix
+#./Laptop/hibernate.nix
+#./Laptop/laptop.nix
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixosLaptop"; # Define your hostname.
+  networking.hostName = "nixosPC"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary

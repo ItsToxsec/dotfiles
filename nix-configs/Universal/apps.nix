@@ -85,7 +85,7 @@ environment.systemPackages = with pkgs; [
     nfs-utils
     ninja
     nitrogen
-    nodejs_26
+    nodejs_24
     npins
     oh-my-zsh
     openvpn
