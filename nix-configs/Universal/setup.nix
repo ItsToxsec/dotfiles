@@ -48,6 +48,7 @@
         lupdate = "sudo nixos-rebuild switch -I nixos-config=/home/$USER/dotfiles/nix-configs/Laptop/laptop.nix";
         channel-update = "sudo nix-channel --update";
         nshell = ''f() { nix-shell "$HOME/dotfiles/nix-configs/Universal/shells/$1.nix"; }; f'';
+        tarzip = "tar -xf $1";
       };
       ohMyZsh = {
         enable = true;

@@ -1,0 +1,15 @@
+---@module 'hl'
+hl.on("hyprland.start", function()
+    hl.exec_cmd("lxqt-policykit-agent")
+    hl.exec_cmd("hypridle >> ~/hypridle.log")
+    hl.exec_cmd("brave")
+    hl.exec_cmd("hyprpaper")
+    hl.exec_cmd("qs")
+    hl.exec_cmd("mouseless")
+end)
+
+hl.on("config.reloaded", function()
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme Adwaita")
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme prefer-dark")
+    hl.exec_cmd("hyprshade auto")
+end)

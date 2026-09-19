@@ -17,7 +17,7 @@ environment.systemPackages = with pkgs; [
     brave
     brightnessctl
     btop
-    cargos
+    cargo
     #unstable.cisco-packet-tracer_9
     #davinci-resolve
     dfu-programmer
@@ -147,6 +147,7 @@ environment.systemPackages = with pkgs; [
     wireshark
     wlsunset
     wofi
+    xarchiver
     #xfwm4
     xwayland
     zed-editor
