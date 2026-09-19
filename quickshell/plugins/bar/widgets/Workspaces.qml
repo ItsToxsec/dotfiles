@@ -68,13 +68,23 @@ BarWidget {
         readonly property bool focused: Hyprland.focusedWorkspace !== null && Hyprland.focusedWorkspace.id === modelData
 
         bar: root.bar
-        text: focused ? "\uDB85\uDCFB" : (modelData === 10 ? "0" : String(modelData))
+
+        // Always show the workspace number.
+        text: modelData === 10 ? "0" : String(modelData)
+
+        // Highlight the currently focused workspace.
+        active: focused
+        activeColor: "#f75093"
+
         opacity: occupied || focused ? 1 : 0.5
         horizontalMargin: 6
         verticalPadding: 6
         fixedWidth: root.vertical ? root.barSize : Style.space(20)
         fixedHeight: root.barSize
-        onPressed: function() { root.focusWorkspace(modelData) }
+
+        onPressed: function() {
+          root.focusWorkspace(modelData)
+        }
       }
     }
   }

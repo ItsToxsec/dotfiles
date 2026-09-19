@@ -17,7 +17,7 @@ environment.systemPackages = with pkgs; [
     brave
     brightnessctl
     btop
-    cargo
+    cargos
     #unstable.cisco-packet-tracer_9
     #davinci-resolve
     dfu-programmer
