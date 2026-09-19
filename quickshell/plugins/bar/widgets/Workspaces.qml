@@ -24,18 +24,20 @@ BarWidget {
     for (var i = 0; i < values.length; i++) {
       var workspace = values[i]
       var id = workspace.id
-      if (id <= 0 || id > 10) continue
 
-      // Render populated workspaces, plus the currently active workspace
-      // even when it is empty.
-      var populated = workspace.toplevels && workspace.toplevels.values.length > 0
-      var active = Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.id === id
+      // Only show normal workspaces 1-10.
+      if (id <= 0 || id > 10)
+        continue
 
-      if (populated || active)
-        ids.push(id)
+      // Show every workspace Hyprland currently has,
+      // including empty workspaces.
+      ids.push(id)
     }
 
-    ids.sort(function(left, right) { return left - right })
+    ids.sort(function(left, right) {
+      return left - right
+    })
+
     return ids
   }
 
