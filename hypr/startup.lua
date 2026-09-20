@@ -1,7 +1,16 @@
 ---@module 'hl'
 hl.on("hyprland.start", function()
     hl.exec_cmd("lxqt-policykit-agent")
-    hl.exec_cmd("hypridle >> ~/hypridle.log")
+    hl.exec_cmd([[
+        if [ "$(hostname)" = "nixosLaptop" ]; then
+            hypridle -c ~/.config/hypr/idle/desktop.conf >> ~/hypridle.log 2>&1
+        elseif hostname == "nixosPC" then
+            hypridle -c ~/.config/hypr/idle/laptop.conf >> ~/hypridle.log 2>&1
+        fi
+        else
+            hypridle -c ~/.config/hypr/hypridle.conf >> ~/hypridle.log 2>&1
+        end
+    ]])
     hl.exec_cmd("brave")
     hl.exec_cmd("hyprpaper")
     hl.exec_cmd("qs")

@@ -20,6 +20,7 @@ environment.systemPackages = with pkgs; [
     cargo
     #unstable.cisco-packet-tracer_9
     #davinci-resolve
+    deskflow
     dfu-programmer
     dfu-util
     discord

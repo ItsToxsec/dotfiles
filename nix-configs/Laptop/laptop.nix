@@ -4,9 +4,10 @@
   imports =
     [  # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./Laptop/apps.nix
-      ./Laptop/hibernate.nix
-      ./Laptop/laptop-settings.nix
+      ./apps.nix
+      ./hibernate.nix
+      ./laptop-settings.nix
+      ../configuration.nix
     ];
     networking.hostName = "nixosLaptop"; # Define your hostname.
 }
