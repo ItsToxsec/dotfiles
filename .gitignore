@@ -1,3 +1,3 @@
 software/CiscoPacketTracer_900_Ubuntu_64bit.deb 
-dotfiles/nix-configs/Laptop/hibernate.nix
-dotfiles/nix-configs/Desktop/hibernate.nix
+nix-configs/Laptop/hibernate.nix
+nix-configs/Desktop/hibernate.nix
