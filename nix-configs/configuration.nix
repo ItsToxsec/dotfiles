@@ -71,7 +71,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.itstoxsec = {
     isNormalUser = true;
-    description = "Daniel Arpide";
+    description = "itstoxsec";
     extraGroups = [ "networkmanager" "wheel" "video" "kvm" "libvirtd" "docker" "wireshark" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
   };
