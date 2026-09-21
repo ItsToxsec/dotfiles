@@ -25,16 +25,20 @@ BarWidget {
       var workspace = values[i]
       var id = workspace.id
 
-      // Only show normal workspaces 1-10.
-      if (id <= 0 || id > 10)
+      // Valid workspace IDs:
+      // 1-10   = ALT + number
+      // 11-19  = ALT + F1-F9
+      // 110    = ALT + F10
+      if (!((id >= 1 && id <= 19) || id === 110))
         continue
 
-      // Show every workspace Hyprland currently has,
-      // including empty workspaces.
       ids.push(id)
     }
 
     ids.sort(function(left, right) {
+      // Put workspace 110 after workspace 19.
+      if (left === 110) return 1
+      if (right === 110) return -1
       return left - right
     })
 

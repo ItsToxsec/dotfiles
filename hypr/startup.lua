@@ -2,14 +2,17 @@
 hl.on("hyprland.start", function()
     hl.exec_cmd("lxqt-policykit-agent")
     hl.exec_cmd([[
-        if [ "$(hostname)" = "nixosLaptop" ]; then
-            hypridle -c ~/.config/hypr/idle/desktop.conf >> ~/hypridle.log 2>&1
-        elseif hostname == "nixosPC" then
-            hypridle -c ~/.config/hypr/idle/laptop.conf >> ~/hypridle.log 2>&1
-        fi
-        else
-            hypridle -c ~/.config/hypr/hypridle.conf >> ~/hypridle.log 2>&1
-        end
+        case "$(hostname)" in
+            nixosPC)
+                exec hypridle -c "$HOME/.config/hypr/idle/desktop.conf" >> "$HOME/hypridle.log" 2>&1
+                ;;
+            nixosLaptop)
+                exec hypridle -c "$HOME/.config/hypr/idle/laptop.conf" >> "$HOME/hypridle.log" 2>&1
+                ;;
+            *)
+                exec hypridle -c "$HOME/.config/hypr/idle/desktop.conf" >> "$HOME/hypridle.log" 2>&1
+                ;;
+        esac
     ]])
     hl.exec_cmd("brave")
     hl.exec_cmd("hyprpaper")

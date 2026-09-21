@@ -23,3 +23,8 @@ hl.bind(mainMod .. " + CTRL + SHIFT + 0", hl.dsp.window.move({ workspace = 110 }
 
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+
+hl.bind("ALT + P", hl.dsp.workspace.move({ monitor = "r" }))
+hl.bind("ALT + O", hl.dsp.workspace.move({ monitor = "l" }))
+hl.bind("ALT + U", hl.dsp.workspace.move({ monitor = "u" }))
+hl.bind("ALT + I", hl.dsp.workspace.move({ monitor = "d" }))
