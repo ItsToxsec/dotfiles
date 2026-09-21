@@ -1,6 +1,7 @@
 ---@module 'hl'
 hl.on("hyprland.start", function()
     hl.exec_cmd("lxqt-policykit-agent")
+    hl.exec_cmd("systemctl --user start sunshine.service")
     hl.exec_cmd([[
         case "$(hostname)" in
             nixosPC)
