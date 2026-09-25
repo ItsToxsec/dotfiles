@@ -50,7 +50,7 @@
         },
         {
           "id": "qs.power",
-          "showPercentage": false
+          "showPercentage": true
         },
         {
           "id": "qs.power-controls"
