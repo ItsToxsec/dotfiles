@@ -20,15 +20,13 @@
       ],
       "center": [
         {
-          "id": "qs.clock"
+          "id": "qs.clock",
+          "format": "ddd d MMM HH:mm"
         }
       ],
       "right": [
         {
           "id": "qs.audio"
-        },
-        {
-          "id": "qs.network"
         },
         {
           "id": "qs.cpu"
@@ -44,6 +42,9 @@
         },
         {
           "id": "qs.temperature"
+        },
+        {
+          "id": "qs.network"
         },
         {
           "id": "qs.monitor"

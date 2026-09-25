@@ -1,15 +1,22 @@
-{ inputs, config, pkgs, ...  }:
+{ config, pkgs, lib, ... }:
 
 {
-    services.sunshine = {
-        enable = true;
-        autoStart = true;
-        capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
-        openFirewall = true;
-    };
-    networking.firewall = {
-        enable = true;
-        allowedTCPPorts = [ 47984 47989 47990 48010 48999 ];
-        allowedUDPPorts = [ 47989 47998 47999 48000 ];
-    };
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+
+    # Needed for KMS capture on Wayland / Hyprland
+    capSysAdmin = true;
+
+    # Let the NixOS Sunshine module open the required ports
+    openFirewall = true;
+  };
+
+  # Make Sunshine start with the graphical user session.
+  systemd.user.services.sunshine = {
+    wantedBy = [ "graphical-session.target" ];
+
+    wants = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+  };
 }

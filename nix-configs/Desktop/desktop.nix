@@ -8,6 +8,7 @@
       ../configuration.nix
       # Desktop Specific
       ./apps.nix
+      ./autologin.nix
       ./steam.nix
       ./sunshine.nix
       ./windows.nix
