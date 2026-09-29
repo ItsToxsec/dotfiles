@@ -1,17 +1,19 @@
-{ inputs, config, pkgs, ...  }:
+{ config, pkgs, ... }:
 
 {
   services.greetd = {
     enable = true;
-    settings = rec {
+
+    settings = {
       initial_session = {
         command = "start-hyprland";
         user = "itstoxsec";
       };
-      default_session = initial_session;
+
+      default_session = {
+        command = "start-hyprland";
+        user = "itstoxsec";
+      };
     };
   };
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "itstoxsec";
-  services.displayManager.defaultSession = "hyprland";
 }
