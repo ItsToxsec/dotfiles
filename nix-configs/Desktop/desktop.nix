@@ -9,6 +9,7 @@
       # Desktop Specific
       ./apps.nix
       ./autologin.nix
+      ./ssd.nix
       ./steam.nix
       ./sunshine.nix
       ./windows.nix
