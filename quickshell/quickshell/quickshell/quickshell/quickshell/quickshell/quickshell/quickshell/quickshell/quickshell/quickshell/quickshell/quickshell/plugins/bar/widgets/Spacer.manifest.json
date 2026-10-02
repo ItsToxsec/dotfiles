@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "qs.spacer",
+  "name": "Spacer",
+  "version": "1.0.0",
+  "author": "Quickshell",
+  "description": "Configurable blank space",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Spacer.qml"
+  },
+  "barWidget": {
+    "displayName": "Spacer",
+    "description": "Configurable blank space",
+    "category": "Layout",
+    "allowMultiple": true,
+    "settingsForm": "spacerSettings"
+  }
+}

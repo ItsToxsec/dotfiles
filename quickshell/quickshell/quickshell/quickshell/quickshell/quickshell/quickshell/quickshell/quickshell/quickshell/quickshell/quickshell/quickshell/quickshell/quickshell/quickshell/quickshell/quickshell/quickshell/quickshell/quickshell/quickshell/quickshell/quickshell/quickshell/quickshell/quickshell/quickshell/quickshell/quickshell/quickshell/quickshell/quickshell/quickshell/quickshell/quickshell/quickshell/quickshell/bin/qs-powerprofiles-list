@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -u
+
+resolve_bin() {
+  local name="$1" p
+  for p in \
+    "/run/current-system/sw/bin/$name" \
+    "/nix/var/nix/profiles/system/sw/bin/$name" \
+    "/etc/profiles/per-user/${USER:-}/bin/$name" \
+    "$HOME/.nix-profile/bin/$name"
+  do
+    if [ -x "$p" ]; then
+      printf '%s\n' "$p"
+      return 0
+    fi
+  done
+  command -v "$name" 2>/dev/null || return 1
+}
+
+PP="$(resolve_bin powerprofilesctl || true)"
+active="balanced"
+
+if [ -n "$PP" ]; then
+  current="$("$PP" get 2>/dev/null || true)"
+  case "$current" in
+    power-saver|balanced|performance) active="$current" ;;
+  esac
+fi
+
+# Protocol: profile<TAB>active(1|0)
+for profile in power-saver balanced performance; do
+  if [ "$profile" = "$active" ]; then
+    printf '%s\t1\n' "$profile"
+  else
+    printf '%s\t0\n' "$profile"
+  fi
+done

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "qs.power-controls",
+  "name": "Power Controls",
+  "version": "1.0.0",
+  "author": "Quickshell / NixOS port",
+  "description": "Power menu button",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "PowerControls.qml"
+  },
+  "barWidget": {
+    "displayName": "Power",
+    "description": "Open system power controls",
+    "category": "System",
+    "defaultSection": "right",
+    "allowMultiple": false
+  }
+}

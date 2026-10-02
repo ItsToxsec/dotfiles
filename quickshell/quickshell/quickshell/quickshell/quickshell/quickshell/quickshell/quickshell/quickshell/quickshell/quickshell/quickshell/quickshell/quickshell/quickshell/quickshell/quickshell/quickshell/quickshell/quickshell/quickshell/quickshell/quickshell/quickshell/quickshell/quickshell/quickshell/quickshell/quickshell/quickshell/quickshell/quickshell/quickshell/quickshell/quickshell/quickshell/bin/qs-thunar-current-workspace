@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -u
+
+resolve_bin() {
+  local name="$1" p
+  for p in \
+    "/run/current-system/sw/bin/$name" \
+    "/nix/var/nix/profiles/system/sw/bin/$name" \
+    "/etc/profiles/per-user/${USER:-}/bin/$name" \
+    "$HOME/.nix-profile/bin/$name"
+  do
+    [ -x "$p" ] && { printf '%s\n' "$p"; return 0; }
+  done
+  command -v "$name" 2>/dev/null
+}
+
+THUNAR="$(resolve_bin thunar)"
+exec "$THUNAR" --new-window "$@"

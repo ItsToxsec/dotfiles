@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+set -u
+
+resolve_bin() {
+  local name="$1" p
+  for p in \
+    "/run/current-system/sw/bin/$name" \
+    "/nix/var/nix/profiles/system/sw/bin/$name" \
+    "/etc/profiles/per-user/${USER:-}/bin/$name" \
+    "$HOME/.nix-profile/bin/$name"
+  do
+    if [ -x "$p" ]; then printf '%s\n' "$p"; return 0; fi
+  done
+  command -v "$name" 2>/dev/null || return 1
+}
+
+NMCLI="$(resolve_bin nmcli || true)"
+IPBIN="$(resolve_bin ip || true)"
+
+iface=""
+type=""
+ssid=""
+ipaddr=""
+prefix=""
+gateway=""
+signal=""
+freq=""
+bitrate=""
+rx_bytes=""
+tx_bytes=""
+speed=""
+duplex=""
+
+if [ -n "$NMCLI" ]; then
+  # Prefer active Wi-Fi, then any active non-loopback interface.
+  while IFS=: read -r dev dtype state con; do
+    [ "$state" = "connected" ] || continue
+    if [ "$dtype" = "wifi" ]; then
+      iface="$dev"
+      type="wifi"
+      [ "$con" != "--" ] && ssid="$con"
+      break
+    fi
+  done < <("$NMCLI" -t -f DEVICE,TYPE,STATE,CONNECTION device status 2>/dev/null)
+
+  if [ -z "$iface" ]; then
+    while IFS=: read -r dev dtype state con; do
+      [ "$state" = "connected" ] || continue
+      [ "$dtype" = "loopback" ] && continue
+      iface="$dev"
+      case "$dtype" in
+        ethernet) type="ethernet" ;;
+        wifi) type="wifi" ;;
+        *) type="$dtype" ;;
+      esac
+      break
+    done < <("$NMCLI" -t -f DEVICE,TYPE,STATE,CONNECTION device status 2>/dev/null)
+  fi
+
+  if [ -n "$iface" ]; then
+    addr="$("$NMCLI" -g IP4.ADDRESS device show "$iface" 2>/dev/null | head -n1)"
+    if [ -n "$addr" ]; then
+      ipaddr="${addr%%/*}"
+      if [ "$addr" != "$ipaddr" ]; then prefix="${addr##*/}"; fi
+    fi
+    gateway="$("$NMCLI" -g IP4.GATEWAY device show "$iface" 2>/dev/null | head -n1)"
+
+    if [ "$type" = "wifi" ]; then
+      # Escape-aware terse output is awkward to parse, so use fixed fields and
+      # let awk reconstruct SSIDs containing colons by taking the final numeric fields.
+      ap="$("$NMCLI" -t -f IN-USE,SSID,SIGNAL,FREQ,RATE device wifi list ifname "$iface" 2>/dev/null \
+        | awk -F: '$1=="*" { print; exit }')"
+
+      if [ -n "$ap" ]; then
+        # Strip leading "*:"
+        row="${ap#*:}"
+        # RATE is the last field, FREQ second-last, SIGNAL third-last.
+        bitrate="${row##*:}"; row="${row%:*}"
+        freq="${row##*:}"; row="${row%:*}"
+        signal="${row##*:}"; row="${row%:*}"
+        [ -n "$row" ] && ssid="$row"
+      fi
+    fi
+  fi
+fi
+
+# Fall back to kernel routing info if NetworkManager did not provide interface.
+if [ -z "$iface" ] && [ -n "$IPBIN" ]; then
+  iface="$("$IPBIN" route show default 2>/dev/null | awk 'NR==1 {for(i=1;i<=NF;i++) if($i=="dev"){print $(i+1); exit}}')"
+  if [ -n "$iface" ]; then
+    type="ethernet"
+    case "$iface" in
+      wl*|wlan*) type="wifi" ;;
+    esac
+    addr="$("$IPBIN" -4 -o addr show dev "$iface" scope global 2>/dev/null | awk 'NR==1{print $4}')"
+    ipaddr="${addr%%/*}"
+    [ "$addr" != "$ipaddr" ] && prefix="${addr##*/}"
+    gateway="$("$IPBIN" route show default dev "$iface" 2>/dev/null | awk 'NR==1{for(i=1;i<=NF;i++) if($i=="via"){print $(i+1); exit}}')"
+  fi
+fi
+
+if [ -n "$iface" ]; then
+  [ -r "/sys/class/net/$iface/statistics/rx_bytes" ] && rx_bytes="$(cat "/sys/class/net/$iface/statistics/rx_bytes")"
+  [ -r "/sys/class/net/$iface/statistics/tx_bytes" ] && tx_bytes="$(cat "/sys/class/net/$iface/statistics/tx_bytes")"
+  [ -r "/sys/class/net/$iface/speed" ] && speed="$(cat "/sys/class/net/$iface/speed" 2>/dev/null || true)"
+  [ -r "/sys/class/net/$iface/duplex" ] && duplex="$(cat "/sys/class/net/$iface/duplex" 2>/dev/null || true)"
+fi
+
+# Model.parseKeyValue expects tab-delimited key/value lines.
+emit() { printf '%s\t%s\n' "$1" "$2"; }
+
+emit iface "$iface"
+emit type "$type"
+emit ip "$ipaddr"
+emit prefix "$prefix"
+emit gateway "$gateway"
+emit speed "$speed"
+emit duplex "$duplex"
+emit ssid "$ssid"
+emit signal "$signal"
+emit freq "$freq"
+emit bitrate "$bitrate"
+emit rx_bytes "$rx_bytes"
+emit tx_bytes "$tx_bytes"

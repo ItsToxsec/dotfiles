@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "qs.bar",
+  "name": "Bar",
+  "version": "1.0.0",
+  "author": "Quickshell",
+  "description": "Status bar with widgets",
+  "kinds": [
+    "bar"
+  ],
+  "entryPoints": {
+    "bar": "Bar.qml"
+  }
+}

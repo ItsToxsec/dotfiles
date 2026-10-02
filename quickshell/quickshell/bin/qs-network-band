@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -u
+NMCLI=""
+for c in \
+  /run/current-system/sw/bin/nmcli \
+  /etc/profiles/per-user/"$USER"/bin/nmcli \
+  "$HOME/.nix-profile/bin/nmcli" \
+  "$(command -v nmcli 2>/dev/null || true)"
+do
+  if [ -n "$c" ] && [ -x "$c" ]; then NMCLI="$c"; break; fi
+done
+[ -n "$NMCLI" ] || exit 0
+
+iface=$("$NMCLI" -t -f DEVICE,TYPE,STATE device status 2>/dev/null \
+  | awk -F: '$2=="wifi" && $3=="connected"{print $1; exit}')
+[ -n "$iface" ] || exit 0
+
+freq=$("$NMCLI" -t -f IN-USE,FREQ device wifi list ifname "$iface" 2>/dev/null \
+  | awk -F: '$1=="*"{print $2; exit}')
+case "$freq" in
+  "" ) ;;
+  2??? ) echo "2.4 GHz" ;;
+  5??? ) echo "5 GHz" ;;
+  6???|7??? ) echo "6 GHz" ;;
+  * ) echo "${freq} MHz" ;;
+esac

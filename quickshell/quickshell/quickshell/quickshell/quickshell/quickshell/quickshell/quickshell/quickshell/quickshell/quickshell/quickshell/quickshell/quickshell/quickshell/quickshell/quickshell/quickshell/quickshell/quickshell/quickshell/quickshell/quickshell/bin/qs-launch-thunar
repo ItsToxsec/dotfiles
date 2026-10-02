@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -u
+
+resolve_bin() {
+  local name="$1" p
+  for p in \
+    "/run/current-system/sw/bin/$name" \
+    "/nix/var/nix/profiles/system/sw/bin/$name" \
+    "/etc/profiles/per-user/${USER:-}/bin/$name" \
+    "$HOME/.nix-profile/bin/$name"
+  do
+    if [ -x "$p" ]; then
+      printf '%s\n' "$p"
+      return 0
+    fi
+  done
+
+  command -v "$name" 2>/dev/null || return 1
+}
+
+HYPRCTL="$(resolve_bin hyprctl || true)"
+THUNAR="$(resolve_bin thunar || true)"
+
+[ -n "$THUNAR" ] || exit 127
+
+# Hyprland 0.55+ uses Lua dispatch expressions. This mirrors:
+# hl.bind(..., hl.dsp.exec_cmd("thunar"))
+#
+# Escape backslashes and quotes so the resolved NixOS path is safe in Lua.
+if [ -n "$HYPRCTL" ]; then
+  lua_cmd="${THUNAR//\\/\\\\}"
+  lua_cmd="${lua_cmd//\"/\\\"}"
+  exec "$HYPRCTL" dispatch "hl.dsp.exec_cmd(\"${lua_cmd}\")"
+fi
+
+# Fallback if Hyprland IPC is unavailable.
+exec "$THUNAR"

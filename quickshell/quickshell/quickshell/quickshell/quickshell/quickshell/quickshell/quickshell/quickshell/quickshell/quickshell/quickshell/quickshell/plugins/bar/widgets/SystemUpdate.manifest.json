@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "qs.system-update",
+  "name": "Quickshell update",
+  "version": "1.0.0",
+  "author": "Quickshell",
+  "description": "Indicates available Quickshell updates",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "SystemUpdate.qml"
+  },
+  "barWidget": {
+    "displayName": "Quickshell update",
+    "description": "Indicates available Quickshell updates",
+    "category": "System",
+    "allowMultiple": false
+  }
+}

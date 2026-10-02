@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+monitor="${1:-}"
+scale="${2:-}"
+
+if [ -z "$monitor" ] || [ -z "$scale" ]; then
+  echo "usage: qs-monitor-scale <monitor> <scale>" >&2
+  exit 2
+fi
+
+resolve_bin() {
+  local name="$1" p
+  for p in \
+    "/run/current-system/sw/bin/$name" \
+    "/nix/var/nix/profiles/system/sw/bin/$name" \
+    "/etc/profiles/per-user/${USER:-}/bin/$name" \
+    "$HOME/.nix-profile/bin/$name"
+  do
+    if [ -x "$p" ]; then printf '%s\n' "$p"; return 0; fi
+  done
+  command -v "$name" 2>/dev/null || return 1
+}
+
+HYPRCTL="$(resolve_bin hyprctl)"
+JQ="$(resolve_bin jq || true)"
+
+# Read the current monitor mode/position/transform so changing scale does not
+# disturb the rest of the monitor configuration.
+if [ -n "$JQ" ]; then
+  data="$("$HYPRCTL" -j monitors 2>/dev/null || true)"
+  mode="$(printf '%s' "$data" | "$JQ" -r --arg n "$monitor" '.[] | select(.name==$n) | "\(.width)x\(.height)@\(.refreshRate)"' | head -n1)"
+  x="$(printf '%s' "$data" | "$JQ" -r --arg n "$monitor" '.[] | select(.name==$n) | .x' | head -n1)"
+  y="$(printf '%s' "$data" | "$JQ" -r --arg n "$monitor" '.[] | select(.name==$n) | .y' | head -n1)"
+  transform="$(printf '%s' "$data" | "$JQ" -r --arg n "$monitor" '.[] | select(.name==$n) | .transform' | head -n1)"
+else
+  mode=""
+  x=""
+  y=""
+  transform=""
+fi
+
+[ -n "$mode" ] && [ "$mode" != "null" ] || mode="preferred"
+if [ -n "$x" ] && [ -n "$y" ] && [ "$x" != "null" ] && [ "$y" != "null" ]; then
+  pos="${x}x${y}"
+else
+  pos="auto"
+fi
+[ -n "$transform" ] && [ "$transform" != "null" ] || transform="0"
+
+# Apply the scale while preserving mode/position. Transform is supplied as a
+# monitor keyword option so rotated screens remain rotated.
+"$HYPRCTL" keyword monitor "${monitor},${mode},${pos},${scale},transform,${transform}"

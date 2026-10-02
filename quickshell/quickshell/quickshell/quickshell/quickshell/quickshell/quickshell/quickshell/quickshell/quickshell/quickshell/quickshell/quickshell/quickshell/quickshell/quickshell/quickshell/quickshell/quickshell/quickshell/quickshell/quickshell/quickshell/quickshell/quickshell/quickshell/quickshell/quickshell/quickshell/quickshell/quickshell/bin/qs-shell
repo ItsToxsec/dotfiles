@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -u
+root="$(cd "$(dirname "$0")/.." && pwd)"
+
+# Quickshell 0.3.0 exposes IPC through `qs ipc`. Some NixOS installations
+# expose the same executable as `quickshell`, so support both.
+if command -v qs >/dev/null 2>&1; then
+  QS=qs
+elif command -v quickshell >/dev/null 2>&1; then
+  QS=quickshell
+else
+  echo "qs-shell: qs/quickshell not found" >&2
+  exit 127
+fi
+
+if [[ "${1:-}" == shell ]]; then
+  shift
+  target="${1:-}"
+  shift || true
+
+  case "$target" in
+    ping)
+      exec "$QS" ipc call shell ping
+      ;;
+    toggle|summon)
+      id="${1:-}"
+      payload="${2:-{}}"
+      exec "$QS" ipc call shell "$target" "$id" "$payload"
+      ;;
+    hide)
+      id="${1:-}"
+      exec "$QS" ipc call shell hide "$id"
+      ;;
+    rescanPlugins)
+      exec "$QS" ipc call shell rescanPlugins
+      ;;
+    listPlugins)
+      exec "$QS" ipc call shell listPlugins
+      ;;
+    reloadConfig)
+      exec "$QS" ipc call shell reloadConfig
+      ;;
+    *)
+      # The shell IPC exposes a generic call(id, method, arg) function.
+      method="$target"
+      id="${1:-}"
+      arg="${2:-}"
+      exec "$QS" ipc call shell call "$id" "$method" "$arg"
+      ;;
+  esac
+fi
+
+if [[ "${1:-}" == osd ]]; then
+  shift
+  action="${1:-}"
+  shift || true
+  case "$action" in
+    show)
+      exec "$QS" ipc call osd show "${1:-{}}"
+      ;;
+    close)
+      exec "$QS" ipc call osd close
+      ;;
+    *) exit 0 ;;
+  esac
+fi
+
+if [[ "${1:-}" == lock ]]; then
+  if [[ "${2:-}" == isLocked ]]; then echo false; fi
+  exit 0
+fi
+
+exit 0

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "qs.memory",
+  "name": "Memory",
+  "version": "1.0.0",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Widget.qml"
+  },
+  "barWidget": {}
+}

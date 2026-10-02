@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+set -u
+
+dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+
+brightness="$("$dir/qs-brightness-display" 2>/dev/null || true)"
+brightness_available=0
+if [[ "$brightness" =~ ^[0-9]+$ ]]; then
+  brightness_available=1
+else
+  brightness=""
+fi
+
+internal=""
+external=""
+internal_enabled=""
+mirror=""
+focused=""
+scale=""
+displays="[]"
+
+if command -v hyprctl >/dev/null 2>&1; then
+  monitors="$(hyprctl monitors -j 2>/dev/null || true)"
+
+  internal="$(
+    printf '%s' "$monitors" \
+      | grep -Eo '"name"[[:space:]]*:[[:space:]]*"(eDP|LVDS)[^"]*"' \
+      | head -n1 \
+      | sed -E 's/.*"([^"]+)"$/\1/' || true
+  )"
+
+  focused="$(
+    printf '%s' "$monitors" \
+      | tr '{' '\n' \
+      | awk '
+        /"focused"[[:space:]]*:[[:space:]]*true/ {
+          if (match($0, /"name"[[:space:]]*:[[:space:]]*"[^"]+"/)) {
+            s=substr($0,RSTART,RLENGTH)
+            sub(/^.*"/,"",s); sub(/"$/,"",s); print s; exit
+          }
+        }'
+  )"
+
+  scale="$(
+    printf '%s' "$monitors" \
+      | tr '{' '\n' \
+      | awk '
+        /"focused"[[:space:]]*:[[:space:]]*true/ {
+          if (match($0, /"scale"[[:space:]]*:[[:space:]]*[0-9.]+/)) {
+            s=substr($0,RSTART,RLENGTH)
+            sub(/^.*:/,"",s); gsub(/[[:space:]]/,"",s); print s; exit
+          }
+        }'
+  )"
+fi
+
+# If sysfs exposes a backlight device, the internal panel is brightness-capable.
+if (( brightness_available )); then
+  [[ -n "$internal" ]] || internal="internal-backlight"
+  internal_enabled="$internal"
+fi
+
+# Eight-line protocol expected by plugins/panels/monitor/Panel.qml.
+printf '%s\n' "$brightness"
+printf '%s\n' "$internal"
+printf '%s\n' "$external"
+printf '%s\n' "$internal_enabled"
+printf '%s\n' "$mirror"
+printf '%s\n' "$focused"
+printf '%s\n' "$scale"
+printf '%s\n' "$displays"
