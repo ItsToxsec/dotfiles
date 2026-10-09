@@ -12,6 +12,15 @@ hl.monitor({
     scale    = 1.0,
 })
 
+hl.window_rule({
+    name = "steam-workspace",
+    match = {
+        class = "steam",
+    },
+    monitor = "DP-1",
+    workspace = "13 silent",
+})
+
 hl.monitor({
     output   = "DP-2",
     mode     = "1920x1080",
