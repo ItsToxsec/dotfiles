@@ -64,7 +64,8 @@ environment.systemPackages = with pkgs; [
     unstable.hyprshade
     unstable.hyprpaper
     imagemagick
-    kdePackages.sddm 
+    kdePackages.dolphin
+    kdePackages.sddm
     #kicad
     krita
     libreoffice-fresh

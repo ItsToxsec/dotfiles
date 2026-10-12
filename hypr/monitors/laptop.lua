@@ -12,6 +12,12 @@ hl.monitor({
     scale    = 1.0,
 })
 
+hl.config({
+    xwayland = {
+        force_zero_scaling = true,
+    },
+})
+
 -- Laptop lid display handling
 hl.bind(
     "switch:on:Lid Switch",
