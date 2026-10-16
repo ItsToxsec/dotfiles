@@ -64,7 +64,6 @@ environment.systemPackages = with pkgs; [
     unstable.hyprshade
     unstable.hyprpaper
     imagemagick
-    kdePackages.dolphin
     kdePackages.sddm
     #kicad
     krita
