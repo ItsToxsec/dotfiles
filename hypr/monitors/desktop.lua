@@ -17,7 +17,6 @@ hl.window_rule({
     match = {
         class = "steam",
     },
-    monitor = "DP-1",
     workspace = "13 silent",
 })
 

@@ -4,9 +4,9 @@ hl.window_rule({
         class = "steam",
     },
     monitor = "DP-1",
-    workspace = "13 silent",
+    workspace = "3",
 })
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("steam -silent")
+    hl.exec_cmd("sh -c 'sleep 15; steam -pipewire -silent'")
 end)
